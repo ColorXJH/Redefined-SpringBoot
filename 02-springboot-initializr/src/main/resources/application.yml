@@ -1,0 +1,32 @@
+#字符串默认不加单引号或者双引号，“”不会转义特殊字符，特殊字符会以原本表示呈现，‘’会转义特殊字符，特殊字符以字符串形式呈现
+name: "zhangsan \n lisi"
+name2: '张三\n李四'
+#对象,map(属性和值) （键值对）
+friends:
+  lastName: 张三
+  age: 18
+#行内写法
+friends1: {lastName: zhangsan,age: 20}
+#数组（list,set）,用 - 值表示数组中的一个元素
+pets:
+  - cat
+  - dog
+  - pig
+#行内写法
+pets2: [cat,dog,pig]
+
+
+
+person:
+  name: zhangsan
+  age: 18
+  boss: false
+  birth: 2017/12/12
+  maps: {k1: v1,k2: 12}
+  lists:
+    - lisi
+    - zhangsan
+    - wangwu
+  dog:
+    name: xiaohei
+    age: 2

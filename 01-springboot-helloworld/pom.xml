@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--引入自己的父工程-->
+    <parent>
+        <artifactId>Redefined-SpringBoot</artifactId>
+        <groupId>org.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>01-springboot-helloworld</artifactId>
+    <!--编译版本以及字符集-->
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <!--在项目引入其他父依赖的情况下还想引入spring-boot-parent，需要如下使用，这时spring-boot-parent带来的编译版本控制，依赖管理，打包方式都没有了，需要我们自己明确定义-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId><!--他其实就是springboot-parent的父依赖，parent里面还定义了其他的控制，不继承parent相当于丢失掉他的便捷性-->
+                <version>1.5.9.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+<!--添加依赖-->
+    <!--springboot将所有的功能场景都抽取出来，做成一个个的starters(启动器)，只需要在项目中引入这些starter 相关场景的所有依赖都会导入进来，要用什么功能，就导入什么场景启动器-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId><!--spring-boot-starter为spring-boot的场景启动器，web模块也依赖与一些必要的基础依赖，比如webmvc,jackson等等-->
+        </dependency>
+
+    </dependencies>
+
+
+
+    <!--如果继承spring的parent标签，这些打包插件，编码格式都不予要自己显式定义，会直接继承-->
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId><!--打包插件-->
+                <!--不继承直接使用打包运行会报错，需要添加以下内容使其重新打包-->
+                <version>1.5.9.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
