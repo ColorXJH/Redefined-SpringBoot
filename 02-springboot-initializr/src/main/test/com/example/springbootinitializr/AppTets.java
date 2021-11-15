@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class AppTets {
     @Autowired
     private Person person;
-
+    //单元测试的测试类一定要和启动类在同一个根目录下。
     @Test
     public void test(){
         System.out.println(person);
