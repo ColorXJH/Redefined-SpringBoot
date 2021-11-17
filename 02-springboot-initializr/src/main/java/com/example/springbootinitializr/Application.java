@@ -2,7 +2,9 @@ package com.example.springbootinitializr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
+//@ImportResource(locations = {"classpath:beans.xml"})
 @SpringBootApplication
 public class Application {
     //使用idea的initializr生成，帮助我们生成了resources文件夹结构 static放静态资源 templates 保存所有模板页面（springboot默认jar包使用嵌入式tomcat,默认不支持jsp页面，可以使用模板引擎）
