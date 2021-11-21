@@ -18,3 +18,12 @@ public class Application {
     }
 
 }
+
+//配置文件加载位置
+    //1:springboot启动会扫描一下位置的application.properties或者application.yml文件作为springboot的默认配置文件
+    //file:./config/
+    //file:./
+    //classpath:/config/
+    //classpath:/
+    //以上是按照优先级从高到低排序的，所有位置的文件都会被加载，高优先级配置的内容会覆盖低优先级配置的内容
+    //我们也可以通过配置spring.config.location来改变默认配置，见新工程：03-springboot-config

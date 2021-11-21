@@ -27,7 +27,7 @@ public class AppTets {
 
     @Test
     public void helloService(){
-        boolean b=ioc.containsBean("helloService");
+        boolean b=ioc.containsBean("helloService ");
         System.out.println(b);
     }
 }
