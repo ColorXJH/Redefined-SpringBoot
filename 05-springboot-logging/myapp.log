@@ -1,0 +1,27 @@
+2021-11-22 22:12:10.274  INFO 32 --- [main] c.e.springbootlogging.ApplicationTests   : Starting ApplicationTests using Java 1.8.0_172 on DESKTOP-EHNL6LH with PID 32 (started by ColorXJH in E:\software\git\gitWorkSpace\Redefined-SpringBoot\05-springboot-logging)
+2021-11-22 22:12:10.275 DEBUG 32 --- [main] c.e.springbootlogging.ApplicationTests   : Running with Spring Boot v2.6.0, Spring v5.3.13
+2021-11-22 22:12:10.275  INFO 32 --- [main] c.e.springbootlogging.ApplicationTests   : No active profile set, falling back to default profiles: default
+2021-11-22 22:12:11.185  INFO 32 --- [main] c.e.springbootlogging.ApplicationTests   : Started ApplicationTests in 1.102 seconds (JVM running for 1.771)
+2021-11-22 22:12:11.331 TRACE 32 --- [main] c.e.springbootlogging.ApplicationTests   : 这是trace日志
+2021-11-22 22:12:11.344 DEBUG 32 --- [main] c.e.springbootlogging.ApplicationTests   : 这是debug日志
+2021-11-22 22:12:11.344  INFO 32 --- [main] c.e.springbootlogging.ApplicationTests   : 这是info日志
+2021-11-22 22:12:11.344  WARN 32 --- [main] c.e.springbootlogging.ApplicationTests   : 这是warn日志
+2021-11-22 22:12:11.345 ERROR 32 --- [main] c.e.springbootlogging.ApplicationTests   : 这是error日志
+2021-11-22 === [main] === INFO  === $logger{50} === Starting ApplicationTests using Java 1.8.0_172 on DESKTOP-EHNL6LH with PID 19344 (started by ColorXJH in E:\software\git\gitWorkSpace\Redefined-SpringBoot\05-springboot-logging)
+2021-11-22 === [main] === DEBUG === $logger{50} === Running with Spring Boot v2.6.0, Spring v5.3.13
+2021-11-22 === [main] === INFO  === $logger{50} === No active profile set, falling back to default profiles: default
+2021-11-22 === [main] === INFO  === $logger{50} === Started ApplicationTests in 1.067 seconds (JVM running for 1.719)
+2021-11-22 === [main] === TRACE === $logger{50} === 这是trace日志
+2021-11-22 === [main] === DEBUG === $logger{50} === 这是debug日志
+2021-11-22 === [main] === INFO  === $logger{50} === 这是info日志
+2021-11-22 === [main] === WARN  === $logger{50} === 这是warn日志
+2021-11-22 === [main] === ERROR === $logger{50} === 这是error日志
+2021-11-22 === [main] === INFO  === com.example.springbootlogging.ApplicationTests === Starting ApplicationTests using Java 1.8.0_172 on DESKTOP-EHNL6LH with PID 8656 (started by ColorXJH in E:\software\git\gitWorkSpace\Redefined-SpringBoot\05-springboot-logging)
+2021-11-22 === [main] === DEBUG === com.example.springbootlogging.ApplicationTests === Running with Spring Boot v2.6.0, Spring v5.3.13
+2021-11-22 === [main] === INFO  === com.example.springbootlogging.ApplicationTests === No active profile set, falling back to default profiles: default
+2021-11-22 === [main] === INFO  === com.example.springbootlogging.ApplicationTests === Started ApplicationTests in 1.077 seconds (JVM running for 1.704)
+2021-11-22 === [main] === TRACE === com.example.springbootlogging.ApplicationTests === 这是trace日志
+2021-11-22 === [main] === DEBUG === com.example.springbootlogging.ApplicationTests === 这是debug日志
+2021-11-22 === [main] === INFO  === com.example.springbootlogging.ApplicationTests === 这是info日志
+2021-11-22 === [main] === WARN  === com.example.springbootlogging.ApplicationTests === 这是warn日志
+2021-11-22 === [main] === ERROR === com.example.springbootlogging.ApplicationTests === 这是error日志
