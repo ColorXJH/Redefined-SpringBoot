@@ -58,3 +58,11 @@ public class Application {
 //指定配置：给类路径下放上每个日志框架自己的配置文件即可，springboot就不使用默认配置了，
     //关于springboot的配置规则文件命名，可以查看springboot官方文档，有一节详细介绍了log配置文件
     //logback.xml直接被日志框架识别 logback-spring.xml被springboot加载识别，可以使用springboot的部分高级功能，可以指定某段配置只在某个环境下生效,springProfile
+
+
+
+//切换日志框架
+    //可以按照日志适配图，进行相关的切换：slf4j+log4j, 排除：logback-classic 添加：slf4j-log4j12
+    //可以将spring-boot-starter-logging(底层使用的是slf4j+logback)切换成spring-boot-starter-log4j2
+        //切换为log4j2:将原来的starter-logging排除，然后引入log4j2就可以了，启动之后默认不使用springboot logging 包下的log4j2.xml配置，当然我们也可以
+        //使用log4j2-spring.xml配置,这样可以使用springboot的一些高级特特性，由springboot来接管，而不是直接启动log4j2框架

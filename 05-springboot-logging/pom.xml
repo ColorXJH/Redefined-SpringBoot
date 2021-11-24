@@ -17,9 +17,34 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--如果不使用springboot默认的slf4j+logback，转而使用slf4j+log4j则需要使用如下操作（maven取出依赖图，在依赖图中排除相关实现（选中依赖，然后shift+delete），并引入适配器层，详情请参看资源库中的png图片）-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!--使用log4j2替换默认的starter-logging-->
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+            <!--使用log4j替换logback-->
+            <!--<exclusions>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+            </exclusions>-->
+        </dependency>
+        <!--配合使用log4j-->
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>-->
+        <!--配合使用log4j2-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
         <dependency>
