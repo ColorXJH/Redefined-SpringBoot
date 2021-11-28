@@ -15,7 +15,7 @@ pets:
 #行内写法
 pets2: [cat,dog,pig]
 
-spring:  #默认.properties的优先级要高于yaml文件的优先级,命令行参数优先级的方式又高于.properties文件的方式（java -jar spring-boot-initializr.jar --spring.profiles.active=prod）
+spring:  #默认.properties的优先级要高于yaml文件的优先级,命令行参数优先级的方式又高于.properties文件的方式（java -jar spring-boot-initializr.jar --spring.profiles.active=prod）,虚拟机优先级低于命令行，高于.properties
   profiles:
     active: dev
 ---
