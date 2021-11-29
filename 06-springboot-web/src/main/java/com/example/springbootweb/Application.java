@@ -29,3 +29,6 @@ public class Application {
             //localhost:8080/new1.css   关于static文件夹下的静态文件不生效的原因：https://www.jb51.net/article/175230.htm
                     //讲道理其实springboot帮我们自动配置了这些静态文件的路径位置
                     //当@ConditionalOnMissingBean({WebMvcConfigurationSupport.class})这个条件满足时会生效
+    //欢迎页：静态资源下的所有index.html页面，都被/**映射
+    //低版本的**/favicon.ico都是在静态资源文件夹下找，高版本可能带来安全风险，删除掉了(但是貌似放在类文件的根路径下同时ctrl+f5刷新一下也可以出来)
+
