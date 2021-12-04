@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!--导入这个标签的作用就是有语法提示，也可以不导入-->
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,14 +9,16 @@
 <!--th:text 将div里面的文本内容设置为 -->
 <div id="div01" class="myDiv" th:id="${hello}" th:class="${hello}" th:text="${hello}">这是显示欢迎信息</div>
 <hr/>
-<div th:text="${hello}"></div>
+<!--将div的文本设置为text设置的内容-->
+<div th:text="${hello}">这时默认的不经过模版引擎（直接通过浏览器渲染）显示的内容</div>
+<div th:title="${hello}"></div>
 <div th:utext="${hello}"></div>
 <hr/>
 
-<!-- th:each每次遍历都会生成当前这个标签： 3个h4 -->
+<!-- th:each每次遍历都会生成当前这个标签： 4个h4 -->
 <h4 th:text="${user}"  th:each="user:${users}"></h4>
 <hr/>
-<h4>
+<h4><!--[[]]（转义） 或者[()]（不转义）为行内写法-->
     <span th:each="user:${users}"> [[${user}]] </span>
 </h4>
 <form th:action="@{/upload}" method="post" enctype="multipart/form-data">

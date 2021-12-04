@@ -32,3 +32,27 @@ public class Application {
     //欢迎页：静态资源下的所有index.html页面，都被/**映射
     //低版本的**/favicon.ico都是在静态资源文件夹下找，高版本可能带来安全风险，删除掉了(但是貌似放在类文件的根路径下同时ctrl+f5刷新一下也可以出来)
 
+
+//3:模版引擎
+    //JSP，Velocity, Freemarker, Thymeleaf
+    //springboot推荐使用thymeleaf,语法更简单，功能更强大，
+    //<dependency>
+        //<groupId>org.springframework.boot</groupId>
+        //<artifactId>spring-boot-starter-thymeleaf</artifactId>
+    //</dependency>
+    //可以在<properties>标签中切换thymeleaf和其布局功能的版本
+    //<thymeleaf.version>3.0.12.RELEASE</thymeleaf.version>
+    //<thymeleaf-layout-dialect.version>3.0.0</thymeleaf-layout-dialect.version>
+        //默认thymeleaf3适配layout-dialect 2   thymeleaf2适配layout-dialect1版本
+    //thymeleaf使用以及语法
+        //public static final String DEFAULT_PREFIX = "classpath:/templates/";
+        //public static final String DEFAULT_SUFFIX = ".html";
+    //<html lang="en" xmlns:th="http://www.thymeleaf.org">导入thymeleaf的命名空间
+
+//语法规则：详情简thymeleaf官网文档
+    //1：th:text :改变当前元素的文本内容
+        //th:任意html属性 来替换html原声属性
+    //2：表达式语法
+
+
+
