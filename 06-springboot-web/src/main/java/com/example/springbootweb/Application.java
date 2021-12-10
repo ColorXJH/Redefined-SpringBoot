@@ -18,7 +18,7 @@ public class Application {
     //如何测试关于自定义的viewResolver,定义一个类实现viewResolver，并且配置成容器类然后springboot就将
     //这些类自动加载进入viewResolver列表中，在DispatcherServerlet类的doDispatch方法中打上断点，程序启动时
     //访问任意一个请求地址都会进入该方法，可再次方法的debug中找到我们的自定义viewResolver
-    @Bean
+    //@Bean
     public ViewResolver myViewResolver(){
         return new MyViewResolver();
     }
