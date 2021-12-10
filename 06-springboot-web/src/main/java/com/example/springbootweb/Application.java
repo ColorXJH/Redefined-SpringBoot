@@ -2,6 +2,11 @@ package com.example.springbootweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.ViewResolver;
+
+import java.util.Locale;
 
 @SpringBootApplication
 public class Application {
@@ -10,6 +15,20 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+    //如何测试关于自定义的viewResolver,定义一个类实现viewResolver，并且配置成容器类然后springboot就将
+    //这些类自动加载进入viewResolver列表中，在DispatcherServerlet类的doDispatch方法中打上断点，程序启动时
+    //访问任意一个请求地址都会进入该方法，可再次方法的debug中找到我们的自定义viewResolver
+    @Bean
+    public ViewResolver myViewResolver(){
+        return new MyViewResolver();
+    }
+    private static class MyViewResolver implements ViewResolver{
+
+        @Override
+        public View resolveViewName(String viewName, Locale locale) throws Exception {
+            return null;
+        }
+    }
 }
 
 //web开发
@@ -53,6 +72,32 @@ public class Application {
     //1：th:text :改变当前元素的文本内容
         //th:任意html属性 来替换html原声属性
     //2：表达式语法
+
+//springmvc 的自动配置
+    //1：springboot自动配置好了springmvc,详情请见spring 的官方文档的springboot模块以及web模块的介绍
+    //2：自动配置了xxxViewResolver:视图解析器，根据方法的返回值，得到视图对象（view）,视图对象决定是转发还是重定向以及如何渲染
+        //ContentNegotiatingViewResolver
+        //如何定制视图解析器：我们可以自己给容器中添加一个视图解析器，ContentNegotiatingViewResolver会自动将其组合进来
+    //3:静态资源和webjars
+    //4：静态首页访问index.html
+    //5:convert转换器：类型转换使用  18(文本)-》integer
+    //6：Formatter:格式化器 2021-12-01-》Date
+    //7: httpMessageConverters:springmvc用来转换http请求和响应的：User--json;
+        //底层是从容器中获取所有的HttpMessageConverters
+        //自定义：自己添加converters,需要将组件注册到容器中（@Bean..）
+    //8: messageCodeResolver定义错误代码生成规则
+    //9：ConfigurableWebBindingInitializer：初始化WebBindingInitializer（web数据绑定器：请求参数===》javaBean）:initBinder
+        //也可以自动配置
+//如何修改springboot的默认配置
+    //1：springboot在配置组件时，先看用户是否自己配置了，如果有就用用户配置，如果没有，就自动配置（@ConditionalOnMissingBean...）
+    //2：@Configuration 增强配置
+
+
+
+
+
+
+
 
 
 
