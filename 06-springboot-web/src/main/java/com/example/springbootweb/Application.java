@@ -1,11 +1,29 @@
 package com.example.springbootweb;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.Servlet;
+import java.util.List;
 import java.util.Locale;
 
 @SpringBootApplication
@@ -88,10 +106,61 @@ public class Application {
     //8: messageCodeResolver定义错误代码生成规则
     //9：ConfigurableWebBindingInitializer：初始化WebBindingInitializer（web数据绑定器：请求参数===》javaBean）:initBinder
         //也可以自动配置
+//扩展springmvc
+    //<!--springmvc中的视图解析器-->
+    //<mvc:view-controller path="/hello" view-name="success" />
+    //<!--springmvc中的拦截器-->
+    //<mvc:interceptors>
+    //<mvc:interceptor>
+    //<!--具体的拦截请求-->
+    //<mvc:mapping path="/hello"/>
+    //<!--具体的哪个拦截器-->
+    //<bean></bean>
+    //</mvc:interceptor>
+    //</mvc:interceptors>
+    //编写一个配置类（@Configuration注解标识的类），这个配置类的类型是WebMvcConfigurerAdapter,并且不能标注@EnableWebMvc注解
+    //既保留了自动配置，也能用我们扩展的配置
+        //原理：1：WebMvcAutoConfiguration是springMVC的自动配置类
+            //2 WebMvcAutoConfiguration类中的内部类：WebMvcAutoConfigurationAdapter，他也继承了WebMvcConfigurerAdapter，主要的是其上方有一个注入注解
+                //@Import({WebMvcAutoConfiguration.EnableWebMvcConfiguration.class}),这个类中有一个自动注入属性，表示了从容其中获取所有的WebMvcConfigurer
+                    //@Autowired(
+                    //        required = false
+                    //)
+                    //public void setConfigurers(List<WebMvcConfigurer> configurers) {
+                    //    if (!CollectionUtils.isEmpty(configurers)) {
+                    //        this.configurers.addWebMvcConfigurers(configurers);
+                    //    }
+                    //
+                    //}
+                //3：容器中的所有的WebMvcConfigurer都会一起起作用
+                //4: 我们的配置类也会被调用
+            //效果就是：springmvc的自动配置和我们的扩展配置都会起作用
+        //@EnableWebMvc注解的作用是：全面接管springmvc,springboot对springmvc的自动配置不需要了，所有都是我们自己配
+        //需要我们在配置类中添加注解@EnableWebMvc
+
+        //原理：为什么加了@EnableWebMvc注解，自动配置就失效了
+            //1：该注解的核心是导入了：@Import({DelegatingWebMvcConfiguration.class})，他导入了WebMvcConfigurationSupport类，导致配置类WebMvcAutoConfiguration的条件判断失效了
+        /*@Configuration
+        public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {*/
+        //自动配置类的签名如下：
+        /*@Configuration(
+                proxyBeanMethods = false
+        )
+        @ConditionalOnWebApplication(
+                type = ConditionalOnWebApplication.Type.SERVLET
+        )
+        @ConditionalOnClass({Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class})
+        @ConditionalOnMissingBean({WebMvcConfigurationSupport.class})
+        @AutoConfigureOrder(-2147483638)
+        @AutoConfigureAfter({DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class, ValidationAutoConfiguration.class})
+        public class WebMvcAutoConfiguration {*/
+        //其中包含条件判断： @ConditionalOnMissingBean({WebMvcConfigurationSupport.class})，没有这个类才生效
+        //导入的WebMvcConfigurationSupport只是springmvc最基本的功能
+
 //如何修改springboot的默认配置
     //1：springboot在配置组件时，先看用户是否自己配置了，如果有就用用户配置，如果没有，就自动配置（@ConditionalOnMissingBean...）
     //2：@Configuration 增强配置
-
+    //3:在springboot中会有非常多的xxxConfigurer类帮助我们扩展配置，
 
 
 

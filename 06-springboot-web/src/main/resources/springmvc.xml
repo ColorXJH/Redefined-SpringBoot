@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--springmvc中的视图解析器-->
+    <mvc:view-controller path="/hello" view-name="success" />
+    <!--springmvc中的拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--具体的拦截请求-->
+            <mvc:mapping path="/hello"/>
+            <!--具体的哪个拦截器-->
+            <bean></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
+
+<!--这些配置是基于springmvc实现的，没了这些配置，springboot也能做出相应扩展-->
