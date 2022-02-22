@@ -91,6 +91,7 @@ public class Application {
             response.getWriter().append(link);*/
             //但是这个方法会有一个下问题，后台会报错：getOutputStream() has already been called for this response
                 //因为：response.getWriter().append(link);这个方法和页面的out输出流冲突了
+                //https://www.cnblogs.com/jusha/p/11979734.html
 //3:模版引擎
     //JSP，Velocity, Freemarker, Thymeleaf
     //springboot推荐使用thymeleaf,语法更简单，功能更强大，
