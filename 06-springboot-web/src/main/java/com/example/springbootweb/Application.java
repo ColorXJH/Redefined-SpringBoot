@@ -68,8 +68,29 @@ public class Application {
                     //当@ConditionalOnMissingBean({WebMvcConfigurationSupport.class})这个条件满足时会生效
     //欢迎页：静态资源下的所有index.html页面，都被/**映射
     //低版本的**/favicon.ico都是在静态资源文件夹下找，高版本可能带来安全风险，删除掉了(但是貌似放在类文件的根路径下同时ctrl+f5刷新一下也可以出来)
-
-
+    //若是高项目版本中出现自定的项目路径
+        //则请求时会因为也就是实际路径时http://域名+项目名+favicon.ico，路径错误，自然请求不到，由于谷歌的缓存机制，请求一次没请求到，后边不请求了，自然就没有了。
+        /*可能出现不行的情况
+        a.在application.properties下有配置相关的资源访问路径
+        b.给静态资源定义了前缀*/
+    //解决方法：1：如果没有设置项目路径名称，则可以在静态文件夹下使用资源，默认ctrl+f5刷新显示
+            //2: 如果使用了自定义项目根路径，则可以使用页面明确指定ico：放在head标签中：<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+                //注意：这里是必须放在resources根路径下的资源文件/favicon.ico，
+                //因为浏览器默认请求http://域名+favicon.ico，但是项目经常会配上项目名，也就是实际路径时http://域名+项目名+favicon.ico，路径错误，自然请求不到
+                    //所以必须放在resources根路径下的资源文件/favicon.ico，
+                //但是这样比较费劲，所有页面都要加，折中方案就是用母版页，统一添加，已有项目的话改动也比较大，
+            //3:折中方案二：通过拦截器，在页面渲染完成后追加一段js，
+            //可以继承HandlerInterceptor接口，重写afterCompletion方法，添加以下代码通过js写入
+            /*String link = "<script>" +
+                "var link = document.createElement('link');" +
+                "link.type = 'image/x-icon';" +
+                "link.rel = 'shortcut icon';" +
+                "link.href = '/nascan/images/favicon.ico';" +
+                "document.getElementsByTagName('head')[0].appendChild(link);" +
+                "</script>";
+            response.getWriter().append(link);*/
+            //但是这个方法会有一个下问题，后台会报错：getOutputStream() has already been called for this response
+                //因为：response.getWriter().append(link);这个方法和页面的out输出流冲突了
 //3:模版引擎
     //JSP，Velocity, Freemarker, Thymeleaf
     //springboot推荐使用thymeleaf,语法更简单，功能更强大，

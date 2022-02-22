@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="zh"  xmlns:th="http://www.thymeleaf.org"><!--模板引擎提示代码-->
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
+		<!--项目经常会配上项目名，也就是实际路径时http://域名+项目名+favicon.ico，路径错误，自然请求不到，需要页面明确指定ico：如下-->
+		<!--<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">-->
 		<title>Signin Template for Bootstrap</title>
 		<!-- Bootstrap core CSS -->
+		<!--可以使用静态文件夹下的资源，也可以使用webjars下的资源，当找不到webjars下的资源时，默认使用静态文件夹下的资源-->
 		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
 		<!-- Custom styles for this template -->
 		<link href="asserts/css/signin.css" th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+		<!--@{}语法来引入路径的好处是：当有一天项目的访问名称访问访问路径变了,他会自动的为我们来加上项目名称的访问路径-->
 	</head>
 	<body class="text-center">
 		<form class="form-signin" action="dashboard.html" th:action="@{/user/login}" method="post">

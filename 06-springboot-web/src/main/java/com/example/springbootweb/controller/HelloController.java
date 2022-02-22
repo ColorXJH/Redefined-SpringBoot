@@ -32,4 +32,9 @@ public class HelloController {
         map.put("users", Arrays.asList("张三","李四","王武","赵六"));
         return "success";
     }
+    //注释掉，为了跳转而添加的方法
+    /*@RequestMapping({"/","/index.html"})
+    public String index(){
+        return "login";
+    }*/
 }
