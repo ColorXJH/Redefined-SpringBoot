@@ -27,11 +27,15 @@
 			<input type="password" name="password" class="form-control" placeholder="Password" th:placeholder="#{login.password}" required="">
 			<div class="checkbox mb-3">
 				<label>
+
           			<input type="checkbox" value="remember-me"/> [[#{login.remember}]]
         		</label>
 			</div>
+
+			<!--th:text 这种适用于标签体里面的内容，像上面的input就是自结束的标签，没有标签体，我们就选用行内表达式[[#{login.remember}]]-->
 			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.btn}">Sign in</button>
 			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+			<!--thymeleaf模板引擎的参数携带书写方法，小括号（p='v'），详情请参见thymeleaf教程-->
 			<a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>
 			<a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>
 		</form>

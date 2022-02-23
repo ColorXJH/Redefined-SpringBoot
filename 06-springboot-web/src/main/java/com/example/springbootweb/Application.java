@@ -8,14 +8,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.SearchStrategy;
+import org.springframework.boot.autoconfigure.context.MessageSourceProperties;
 import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -186,9 +193,41 @@ public class Application {
 
 
 
+//2:国际化
+    //springmvc使用步骤
+        //1:编写国际化配置文件
+        //2:使用ResourceBoundleMessageSource管理国际化资源文件
+        //3:在页面使用fmt:message(jsp页面标签)
+    //springboot使用步骤
+        //1：编写国际化配置文件,抽取页面需要编写的国际化消息(默认文件，语言代码_国家代码.properties 配置文件)
+        //2:springboot自动配置好了管理国际化资源文件的组件
+            //注意private String basename = "messages";我们的配置文件可以直接放在类路径下叫messages.properties的文件
+            /*@Configuration(
+                    proxyBeanMethods = false
+            )
+            @ConditionalOnMissingBean(
+                    name = {"messageSource"},
+                    search = SearchStrategy.CURRENT
+            )
+            @AutoConfigureOrder(-2147483648)
+            @Conditional({org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration.ResourceBundleCondition.class})
+            @EnableConfigurationProperties
+            public class MessageSourceAutoConfiguration {*/
 
 
-
-
-
+            /*@Bean
+            public MessageSource messageSource(MessageSourceProperties properties) {
+                ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+                if (StringUtils.hasText(properties.getBasename())) {
+                    messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));
+                }*/
+        //3:去页面获取国际化的值
+            //原来的jsp页面使用fmt:message标签
+            //新的模板引擎thymeleaf:MessageExpression表达式为： #{}
+                //idea可以设置本项目和全局的文件编码以及jdk等结构等，本项目的在setting,以及project structure里面，全局的在setting-》 new project setrup
+                //里面的settings 和structure里面
+        //4:效果：根据浏览器语言设置的信息切换了国际化
+            //原理：jav国际化Local(区域信息对象)，springmvc中的组件LocalResolver（获取区域信息对象），springboot继承springmvc中的各种resolver,其中就有一个叫做
+            //LocaleResolver,默认帮我们配置了这个区域信息解析器，这个默认的区域信息解析器是根据请求头（request.getLocale()）带来的区域信息获取Locale进行国际化
+        //5:如果需要根据按钮自动切换，需要自己写一个区域信息解析器(MyLocaleResolver)
 

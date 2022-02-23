@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguratio
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -55,7 +56,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 //添加拦截器(这个拦截器目前有问题)
-                registry.addInterceptor(myIntercepter).addPathPatterns("/**");
+                //registry.addInterceptor(myIntercepter).addPathPatterns("/**");
                     //ok
                 //super.addInterceptors(registry);
                 //静态资源；  *.css , *.js
@@ -66,8 +67,35 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         };
         return adapter;
     }
+    @Bean
+    public LocaleResolver localeResolver(){
+        return new MyLocaleResolver();
+    }
+
     @Value("${hello}")
     private String hello;
     @Value("${users}")
     private String[] users;
 }
+
+
+           //2:
+           //如果继承WebMvcConfigurationSupport 这个类就会导WebMvcAutoConfiguration失效，具体可以看这个类上面的条件，会全盘接管web，
+           //如果不想全盘接管，可以实现WebMvcConfigurer这个接口，这样原本的默认配置也有，你加的扩展配置也成立
+
+            //3:
+            /*
+            在SpringBoot 2之后的版本改用WebMvcConfigurer这个接口来注册controllers，和之前实现一样的功能，参考以下代码。
+            @Configuration
+            public class MyMvcConfig implements WebMvcConfigurer {
+                @Override
+                public void addViewControllers(ViewControllerRegistry registry) {
+                    registry.addViewController("/").setViewName("login");
+                    registry.addViewController("/index.html").setViewName("login");
+                }
+                //要排除一些静态资源，防止样式丢失
+                @Override
+                public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+                }
+            }*/
