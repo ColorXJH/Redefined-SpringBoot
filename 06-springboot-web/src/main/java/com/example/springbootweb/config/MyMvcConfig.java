@@ -49,6 +49,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 //在这里也可以实现跳转
                 registry.addViewController("/").setViewName("login");
                 registry.addViewController("/index.html").setViewName("login");
+                //登录成功以后防止表单重复提交，可以设置重定向
                 registry.addViewController("/main.html").setViewName("dashboard");
             }
 
@@ -63,6 +64,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 //SpringBoot已经做好了静态资源映射
                 //   registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
                 //   .excludePathPatterns("/index.html","/","/user/login");
+
+                //扩展配置loging拦截器
+                registry.addInterceptor(new LoginHandlerIntercepter()).addPathPatterns("/**")// /++表示任意路径下的任意请求
+                        .excludePathPatterns("/index.html","/","/user/login");//排除拦截请求(注意这里如果自定义了项目访问路径必须要带上)
+                //静态资源如何放行不拦截？以前在springmvc的时候需要放行，但是springboot已经做好了静态资源映射，所以我们不需要处理
             }
         };
         return adapter;

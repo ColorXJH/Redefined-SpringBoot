@@ -56,7 +56,7 @@ public class Application {
     }
 }
 
-//web开发
+//web开发  SpringBoot中，SpringMVC的web配置都在 WebMvcAutoConfiguration 这个配置类里面；
     //1：创建springboot应用，选中我们需要的模块
     //2：springboot已经默认将这些场景都配置好了，只需要在配置文件中指定少量配置就可以运行起来
     //3：自己编写代码
@@ -231,3 +231,10 @@ public class Application {
             //LocaleResolver,默认帮我们配置了这个区域信息解析器，这个默认的区域信息解析器是根据请求头（request.getLocale()）带来的区域信息获取Locale进行国际化
         //5:如果需要根据按钮自动切换，需要自己写一个区域信息解析器(MyLocaleResolver)
 
+        //3:登录
+            //模板引擎页面修改以后，要实时生效
+               //1):禁用模板引擎的缓存  spring.thymeleaf.cache=false
+               //2):页面修改完成后ctrl+F9,重新编译
+            //登录错误消息的显示
+                //<p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+            //拦截器进行登录检查（如果不做，那么直接访问目标url就可以直接访问到资源从而绕过登录页面）
