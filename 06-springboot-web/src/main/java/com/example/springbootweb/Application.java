@@ -238,3 +238,13 @@ public class Application {
             //登录错误消息的显示
                 //<p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
             //拦截器进行登录检查（如果不做，那么直接访问目标url就可以直接访问到资源从而绕过登录页面）
+
+        //4:crud员工列表
+            //实验要求：1：restful crud     uri满足： /资源名称/资源标识  请求方式：http请求方式实现对资源得crud操作
+            //剧烈： 删除 普通请求：deleteEmp?id=1   restful: emp/{id}--delete请求方式
+            //员工列表：thymeleaf公共页面元素抽取
+                //抽取公共片段：th:fragment="topbar"
+                //重用：引入公共片段：<div th:insert="~{commons/bar::topbar}"></div> ==》<div th:insert="commons/bar::topbar"></div>
+                    //模板名：：选择器  或者 模板名::片段名
+                    //insert replace include 三种都可以抽取  1：将公共片段整个插入到元素中 2：将声明元素替换为公共片段 3：将被引入得片段内部得内容插入到元素中
+                    //行内写法需要加上波浪[[~{}]], [(~{})]
