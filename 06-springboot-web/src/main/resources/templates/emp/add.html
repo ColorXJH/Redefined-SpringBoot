@@ -91,6 +91,8 @@
 						</div>
 						<div class="form-group">
 							<label>Birth</label>
+							<!--注意提交的生日的格式，日期格式化，springmvc将页面提交的值转化为指定的类型 2012-12-12-》date有问题，默认日期是按照2020/12/12斜线这种方式-->
+							<!--可以修改配置文件重新定义日期格式,原理springboot自动配置中有:WebMvcAutoConfiguration有一个bean:Formatter定义了一个dateFormatter-->
 							<input name="birth" type="text" class="form-control" placeholder="zhangsan" th:value="${emp!=null}?${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}">
 						</div>
 						<button type="submit" class="btn btn-primary" th:text="${emp!=null}?'修改':'添加'">添加</button>

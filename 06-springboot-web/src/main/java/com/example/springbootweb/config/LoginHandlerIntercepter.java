@@ -25,10 +25,8 @@ public class LoginHandlerIntercepter implements HandlerInterceptor {
         if(user==null){
             //1未登录，返回登录页面
             request.setAttribute("msg","没有权限请登录");
-            String url=request.getRequestURI();
             request.getRequestDispatcher("/index.html").forward(request,response);
             return false;
-
             //2这种重定向的方法失去了携带参数的方法并且需要规定好url地址
             //response.sendRedirect("/crud/");
             //return false;

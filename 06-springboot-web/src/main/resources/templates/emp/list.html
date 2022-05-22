@@ -50,6 +50,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!--引入侧边栏-->
+				<!--list页面高亮员工管理，传值-->
 				<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -70,9 +71,10 @@
 							<tbody>
 								<tr th:each="emp:${emps}">
 									<td th:text="${emp.id}"></td>
-									<td>[[${emp.lastName}]]</td>
+									<td>[[${emp.lastName}]]</td><!--行内写法-->
 									<td th:text="${emp.email}"></td>
 									<td th:text="${emp.gender}==0?'女':'男'"></td>
+									<!--<td th:text="${emp.gender==0?'女':'男'}"></td>--><!--里面外面都可以，推荐写外面-->
 									<td th:text="${emp.department.departmentName}"></td>
 									<td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></td>
 									<td>

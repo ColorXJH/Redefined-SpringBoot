@@ -67,8 +67,9 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
                 //扩展配置loging拦截器
                 registry.addInterceptor(new LoginHandlerIntercepter()).addPathPatterns("/**")// /++表示任意路径下的任意请求
-                        .excludePathPatterns("/index.html","/","/user/login");//排除拦截请求(注意这里如果自定义了项目访问路径必须要带上)
-                //静态资源如何放行不拦截？以前在springmvc的时候需要放行，但是springboot已经做好了静态资源映射，所以我们不需要处理
+                        //.excludePathPatterns("/index.html","/","/user/login");
+                .excludePathPatterns("/index.html","/user/login","/","/webjars/**","/img/**","/**/*.css","/**/*.svg");//带上需要放开的静态资源
+                //静态资源如何放行不拦截？以前在springmvc的时候需要放行，但是springboot已经做好了静态资源映射，所以我们不需要处理，这里在前面已/**拦截了所有的请求，所以需要再次自定义放行
             }
         };
         return adapter;
