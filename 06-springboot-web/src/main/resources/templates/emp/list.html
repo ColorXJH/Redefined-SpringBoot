@@ -79,13 +79,20 @@
 									<td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></td>
 									<td>
 										<a class="btn btn-sm btn-primary" th:href="@{/emp/}+${emp.id}">编辑</a>
+										<!--设置原生属性-->
 										<button th:attr="del_uri=@{/emp/}+${emp.id}" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<!--下面这种方式也行，就是麻烦些，如果有很多这样的按钮需要写很多方法，我们可以把表单抽取放在外面，然后用js的方式提交表单-->
+										<!--<form th:action="@{/emp}+${emp.id}" method="post">
+											<input type="hidden" name="_method" value="delete"/>
+											<button type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										</form>-->
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</main>
+				<!--将不同的请求方式的表单放在外面，这里不设置action，在js中动态赋予表单的url并提交表单-->
 				<form id="deleteEmpForm"  method="post">
 					<input type="hidden" name="_method" value="delete"/>
 				</form>
@@ -95,7 +102,7 @@
 		<!-- Bootstrap core JavaScript
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/dist/jquery.js}"></script>
 		<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
 		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
 
@@ -104,10 +111,12 @@
 		<script>
 			feather.replace()
 		</script>
+		<!--使用js的方式提交表单-->
 		<script>
 			$(".deleteBtn").click(function(){
 			    //删除当前员工的
 			    $("#deleteEmpForm").attr("action",$(this).attr("del_uri")).submit();
+				//取消掉按钮的默认行为，比如有的 button会有type="submit"，这样就点击按钮就直接提交了表单，在写js时3需要去掉这些，或者return false
 			    return false;
             });
 		</script>

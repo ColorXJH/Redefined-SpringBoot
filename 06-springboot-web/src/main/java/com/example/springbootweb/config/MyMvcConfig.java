@@ -58,19 +58,14 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             public void addInterceptors(InterceptorRegistry registry) {
                 //添加拦截器(这个拦截器目前有问题)
                 //registry.addInterceptor(myIntercepter).addPathPatterns("/**");
-                    //ok
-                //super.addInterceptors(registry);
-                //静态资源；  *.css , *.js
-                //SpringBoot已经做好了静态资源映射
-                //   registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                //   .excludePathPatterns("/index.html","/","/user/login");
 
                 //扩展配置loging拦截器
-                registry.addInterceptor(new LoginHandlerIntercepter()).addPathPatterns("/**")// /++表示任意路径下的任意请求
-                        //.excludePathPatterns("/index.html","/","/user/login");
-                .excludePathPatterns("/index.html","/user/login","/","/webjars/**","/img/**","/**/*.css","/**/*.svg");//带上需要放开的静态资源
+                registry.addInterceptor(new LoginHandlerIntercepter()).addPathPatterns("/**")// /**表示任意路径下的任意请求
+                .excludePathPatterns("/index.html","/user/login","/","/webjars/**","/asserts/**");//带上需要放开的静态资源
+                //  /asserts/** 表示静态static 目录asserts目录下的所有资源 /表示当前当前根目录  其下面平级的有 static webjars templates
                 //静态资源如何放行不拦截？以前在springmvc的时候需要放行，但是springboot已经做好了静态资源映射，所以我们不需要处理，这里在前面已/**拦截了所有的请求，所以需要再次自定义放行
             }
+
         };
         return adapter;
     }

@@ -7,8 +7,7 @@ import com.example.springbootweb.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -57,6 +56,34 @@ public class EmployeeController {
         //来到员工列表页面
         // redirect: 表示重定向到一个地址  /代表当前项目路径
         // forward: 表示转发到一个地址
+        return "redirect:/emps";
+    }
+
+    @PutMapping("/emp")
+    public String updateEmp(Employee employee){
+        System.out.println("修改的员工对象"+employee);
+        employeeDao.save(employee);
+        return "redirect:/emps";
+    }
+
+    //来到修改页面，查出当前员工，在页面回显
+    @GetMapping("/emp/{id}")
+    public String toEditPage(@PathVariable("id") Integer id,Model model){
+        Employee employee=employeeDao.get(id);
+        model.addAttribute("emp",employee);
+        //页面要显示所有的部门列表
+        Collection<Department> departments = departmentDao.getDepartments();
+        model.addAttribute("depts",departments);
+
+        //回到修改页面(add是修改，添加二合一页面)
+        return "emp/add";
+    }
+
+
+    //员工删除
+    @DeleteMapping("/emp/{id}")
+    public String deleteEmployee(@PathVariable("id") Integer id){
+        employeeDao.delete(id);
         return "redirect:/emps";
     }
 }

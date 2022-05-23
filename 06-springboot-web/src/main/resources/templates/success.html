@@ -18,7 +18,7 @@
 <!-- th:each每次遍历都会生成当前这个标签： 4个h4 -->
 <h4 th:text="${user}"  th:each="user:${users}"></h4>
 <hr/>
-<h4><!--[[]]（转义） 或者[()]（不转义）为行内写法-->
+<h4><!--[[]]（转]（不转义）为行内写法-->
     <span th:each="user:${users}"> [[${user}]] </span>
 </h4>
 <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
@@ -27,4 +27,4 @@
 </form>
 
 </body>
-</html>
+</html>义） 或者[()
