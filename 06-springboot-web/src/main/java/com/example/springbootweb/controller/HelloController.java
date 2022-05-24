@@ -1,7 +1,10 @@
 package com.example.springbootweb.controller;
 
+import com.example.springbootweb.exception.LoginOutException;
+import com.example.springbootweb.exception.MyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,4 +40,12 @@ public class HelloController {
     public String index(){
         return "login";
     }*/
+    @ResponseBody
+    @RequestMapping("/myhello")
+    public String myhello(@RequestParam("user")String user) {
+        if(user.equals("aaa")){
+            throw new MyException();
+        }
+        return "helloworld";
+    }
 }

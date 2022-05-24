@@ -1,5 +1,6 @@
 package com.example.springbootweb;
 
+import com.example.springbootweb.exception.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -15,14 +16,20 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -30,8 +37,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @SpringBootApplication
 public class Application {
@@ -249,3 +259,78 @@ public class Application {
                     //insert replace include 三种都可以抽取  1：将公共片段整个插入到元素中 2：将声明元素替换为公共片段 3：将被引入得片段内部得内容插入到元素中
                     //行内写法需要加上波浪[[~{}]], [(~{})]
         //引入片段的时候传入参数
+
+        //错误处理机制
+            //1:springboot默认的错误处理机制
+                //浏览器：返回一个默认的错误页面
+                //如果是其他客户端，默认响应json数据
+            //2:原理可以参照：ErrorMvcAutoConfiguration:错误处理的自动配置、
+                //给容器中添加了接个重要的组件
+                    //1:DefaultErrorAttributes
+                        //帮助我们在页面共享信息
+                    //2:BasicErrorController
+                        //@RequestMapping({"${server.error.path:${error.path:/error}}"}),处理默认/error请求
+                    //3:ErrorPageCustomer
+                        //private String path="/error",系统出现错误后来到error请求进行处理，=》，类似于servlet的web.xml注册的错误页面规则
+                    //4:DefaultErrorViewResolver
+                //步骤：一但出现4XX或者5XX之类的错误，ErrorPageCustomer就会生效（定制错误的响应规则）,就会来到/error请求，就会被BasicErrorController处理；
+                    //errorHtml/error方法分别产生html数据和json数据（浏览器发送请求的请求头有accept：text/html,其他客户端：Accept: */*，所以springboot会区分）
+                    //1:响应页面：去哪个页面是由DefaultErrorViewResolver得到的-》默认springboot去找页面error/viewname(error/404)
+                        //如果模板疫情可用就会使用模板疫情解析，返回到errorViewName指定的视图地址
+                        //如果模板疫情不可用，就在静态资源文件夹下寻找viewName对应的页面
+        //2:如何定制错误响应
+             //1:如何定制错误页面
+                //1:有模板引擎的情况下：error/状态码 （将错误页面命名为错误状态码.html 放在模板引擎文件夹的error文件夹下），发生次状态码的错误，就会来到对应的页面，
+                            //所有4XX/5XX的错误都能匹配，所以4XX/5XX.html页面
+                            //2:页面能获取的信息
+                            //timestamp 时间戳  status 状态码 error 错误提示  exception 异常对象 message 异常消息 errors jsr303数据校验的错误都在这里（BindingResults）
+                //2:没有模板引擎的情况下（模板引擎找不到这个页面，静态资源文件夹下查找 static）
+                //3:以上都没有错误页面，默认来到springboot的错误提示页面
+            //2:如何定制错误的json数据（在异常处理器中处理）
+                /*自定义json 返回数据 json格式 @ResponseBody*//*
+                 @ResponseBody
+                    @ExceptionHandler(MyException.class)
+                    public Map<String,Object> myHandlerException(Exception e){
+                        Map<String,Object> map=new HashMap<>();
+                        map.put("code","user not exist");
+                        map.put("message",e.getMessage());
+                     return map;
+                    }*/
+                    //缺点：没有自适应效果 浏览器、客户端都是json数据
+                //如何将我们自己写的数据携带出去：
+                    //1：出现错误后，会来到/error请求，会被BasicErrorController处理，响应出去可以获取的数据是由getErrorAttributes得到的
+                    //(是AbstractErrorController(ErrorController)规定的方法)
+                    //编写一个errorController实现类或者继承了AbstractErrorController的类，重写两个方法，error/errorHtml，在方法中自定义需要返回的数据
+
+                    //2:页面上能用的数据，或者是json返回能用的数据，都是通过errorAttributes.getErrorAttributes得到
+                        //容器中DefaultErrorAttributes.getErrorAttributes()默认进行数据处理的，
+                        //自定义ErrorAttributes
+                    /*@Component
+                    public class MyErrorAttributes extends DefaultErrorAttributes {
+
+                        //返回的map就是页面和json能获取到的所有字段
+                        @Override
+                        public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
+                            Map<String, Object>map=super.getErrorAttributes(webRequest,options);
+                            map.put("company","colorXJH");
+                            //我们的异常处理器携带的数据
+                            Map<String,Object> ext = (Map<String, Object>) webRequest.getAttribute("ext", 0);
+                            map.put("ext",ext);
+                            return map;
+                        }
+                    }*/
+                    //在异常处理器中将需要的数据通过request传递进去
+                    //为了达到自适应效果,可以通过定制ErrorAttrributes改变需要返回的内容
+                    /*@ExceptionHandler(MyException.class)
+                    public String myHandlerException(Exception e, HttpServletRequest request){
+                        Map<String,Object> map=new HashMap<>();
+                        //传入我们自己的错误状态码 4xx/5xx,否则就无法进入错误界面的处理流程
+                        request.setAttribute("javax.servlet.error.status_code",500);
+                        map.put("code","user not exist");
+                        map.put("message","MY MESSAGE");
+                        request.setAttribute("ext",map);
+                        //转发到/error
+                        return "forward:/error";
+                    }*/
+
+                    //http://localhost:8080/crud/myhello?user=aaa
