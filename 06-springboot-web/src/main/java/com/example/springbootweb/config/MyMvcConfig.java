@@ -1,18 +1,11 @@
 package com.example.springbootweb.config;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.*;
-
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName: MyMvcConfig
@@ -26,6 +19,10 @@ import java.util.Map;
 //@EnableWebMvc //全面接管后，所有的springmvc的自动配置都失效，一些静态资源的页面也就无法访问（只是体现之一  ）
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
+
+
+
+
     @Autowired
     private MyIntercepter myIntercepter;
     //ctrl+o  查看重写方法快捷键

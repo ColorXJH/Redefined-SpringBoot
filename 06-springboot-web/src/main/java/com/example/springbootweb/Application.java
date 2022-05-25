@@ -200,6 +200,7 @@ public class Application {
     //1：springboot在配置组件时，先看用户是否自己配置了，如果有就用用户配置，如果没有，就自动配置（@ConditionalOnMissingBean...）
     //2：@Configuration 增强配置
     //3:在springboot中会有非常多的xxxConfigurer类帮助我们扩展配置，
+    //4:在springboot中会有很多的xxxCustomizer帮助我们进行定制配置
 
 
 
@@ -334,3 +335,35 @@ public class Application {
                     }*/
 
                     //http://localhost:8080/crud/myhello?user=aaa
+
+
+
+        //四：配置嵌入式servlet
+        //ConfigurableEmbeddedServletContainer
+        //EmbeddedServletContainerCustomizer
+        //注册servlet,Filter,Listener
+            //如果是以前的web应用目录结构 src/main下会有一个webapp文件夹，下面有webinf,下面有web.xml,我们可以把三大组件都注册在web.xml中
+            //由于springboot默认是以jar包的方式启动嵌入式的servlet容器来启动springboot的web应用，没有web.xml文件，所以使用以下三大组件
+            //springboot帮我们自动配置springmvc的时候，自动的注册springmvc的前端控制器dispatcherServlet，可以参开这个类（DispatcherServletAutoConfiguration）
+            //默认拦截： / 所有请求，包括静态资源，但是不拦截jsp请求  /*会拦截jsp请求，可以通过server.servletPath来修改下springmvc前端控制器默认拦截的请求路径
+                //ServletRegistrationBean
+                //FilterRegistrationBean
+                //ServletListenerRigistrationBean
+        //使用其他servlet容器Jetty(适合长链接应用) Undertow(不支持jsp)
+            //双击类+F4=》打开类的继承树·  ctrl+H全局索引
+
+        //springboot默认使用的是嵌入式的Servlet容器（tomcat）
+            //问题1：如何定制和修改servlet容器的相关配置（外部的servlet容器有config配置啊，xml配置文件等等，内部的如何操作？）
+                //修改springboot配置文件中和server有关的配置（ServerProperties类中相关的属性都是可以设置修改的）
+                //编写一个EmbeddedServletContainerCustomizer（嵌入式的servlet容器定制器），来修改servlet容器的配置
+            //2:springboot能不能支持其他的servlet容器？
+                //嵌入式servlet容器自动配置原理
+                    //springboot_autoconfigure.jar包中的web文件夹下的embeded文件夹下的EmbeddedWebServerFactoryCustomizerAutoConfiguration类自动配置
+                    // @ConditionalOnClass({Tomcat.class, UpgradeProtocol.class})
+                    //显示一个类的所有方法 idea->view->tool-windows->structure
+                //我们对嵌入式容器的配置修改是怎样生效的=》1：修改serverProperties类的属性 2定制EmbededServletContainerCustomizer修改了servlet配置
+
+
+
+
+
