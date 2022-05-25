@@ -362,6 +362,11 @@ public class Application {
                     // @ConditionalOnClass({Tomcat.class, UpgradeProtocol.class})
                     //显示一个类的所有方法 idea->view->tool-windows->structure
                 //我们对嵌入式容器的配置修改是怎样生效的=》1：修改serverProperties类的属性 2定制EmbededServletContainerCustomizer修改了servlet配置
+                //详情请见resource下笔记内容
+            //嵌入式servlet的优缺点
+                //优点：简答，便捷,打可执行的jar包
+                //缺点：默认不支持jsp,优化，定制比较复杂（使用定制器（ServerProperties,自定义定制器），自己编写嵌入式Servlet容器的创建工厂（EmbededServletContainerFactory））
+            //外置的servlet容器：安装在外部的Tomcat->应用war包的方式打包
 
 
 
