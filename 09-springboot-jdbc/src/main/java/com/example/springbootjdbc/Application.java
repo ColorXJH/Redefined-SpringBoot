@@ -2,6 +2,13 @@ package com.example.springbootjdbc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 public class Application {
@@ -29,3 +36,37 @@ public class Application {
         //一下为如何安装docker以及在docker钟安装mysql
             //https://blog.csdn.net/cbh1987/article/details/120481157
             //https://blog.csdn.net/xtkinglong/article/details/123341676
+
+        /*spring:
+                datasource:
+                username: root
+                password: 2012WananXJH
+                url: jdbc:mysql://192.168.40.128:3306/myjdbc
+                driver-class-name: com.mysql.cj.jdbc.Driver*/
+        //数据源的相关配置都在DataSourceProperties类中
+        //使用的数据源为：com.zaxxer.hikari.HikariDataSource，详情见自动配置类：DataSourceAutoConfiguration
+            //各种数据源配置参考如下类：DataSourceConfiguration，根据配置创建数据源，默认使用HiKAri
+            //可以使用spring.datasource.type指定自定义的数据源类型
+            //springboot默认支持tomcat.jdbc.pool.DataSource,HikariDatasource,dbcp.BasicDataSource
+                //dbcp2,以及自定义的数据源类型
+        /*@Configuration(
+                proxyBeanMethods = false
+        )
+        @ConditionalOnMissingBean({DataSource.class})
+        @ConditionalOnProperty(
+                name = {"spring.datasource.type"}
+        )
+        static class Generic {
+            Generic() {
+            }
+
+            @Bean
+            DataSource dataSource(DataSourceProperties properties) {
+                return properties.initializeDataSourceBuilder().build();
+            }
+        }*/
+        //作用：运行建表语句，运行插入数据sql语句
+        //默认将文件命名为 schema.sql, data.sql
+    //操作数据库
+        //自动配置了jdbcTemplate操作数据库
+
