@@ -79,14 +79,14 @@ public class Application {
                 //停止当前你运行的容器
         //启动： docker start container-name/container-id
                 //启动容器
-        //删除： docker rmi container-id
+        //删除： docker rm container-id
                 //删除指定容器
         //端口映射： -p 6379:6379 ; eg: docker run -d -p 6379:6379 --name myredis docker.io/redis
                 //-p:主机端口映射到容器内部的端口
         //容器日志： docker logs container-name/container-id
                 //查看docker的日志
         //更多命令：参见官网：https://docs.docker.com/
-        //注意：一个镜像可以启动多个容器：docker run -d =p 8888:8080 tomcat   docker run -d =p 8889:8080 tomcat  docker run -d =p 8887:8080 tomcat
+        //注意：一个镜像可以启动多个容器：docker run -d =p 8888:8080 tomcat   docker run -d -p 8889:8080 tomcat  docker run -d =p 8887:8080 tomcat
                 //可能报错（启动docker之后操作了防火墙状态，导致docker链被清除，解决办法）输入指令  systemctl restart docker     重启docker服务及可重新生成自定义链DOCKER
                                                                                                                     //或者修改防火墙状态为原样
 

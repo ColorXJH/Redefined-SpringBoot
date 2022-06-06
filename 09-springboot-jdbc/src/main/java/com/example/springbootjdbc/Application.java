@@ -69,4 +69,5 @@ public class Application {
         //默认将文件命名为 schema.sql, data.sql
     //操作数据库
         //自动配置了jdbcTemplate操作数据库
+           // docker run -p 3306:3306  --name mysql03  -e MYSQL_ROOT_PASSWORD=2012WananXJH -d docker.io/mysql
 
