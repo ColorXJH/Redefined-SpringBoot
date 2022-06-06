@@ -29,6 +29,19 @@
             <artifactId>druid</artifactId>
             <version>1.2.8</version>
         </dependency>
+        <!--springboot2中可以使用如下依赖，去除掉上面的依赖，并且可以在配置文件中配置druid的一些属性参数，不用再注册bean了-->
+        <!--<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.9</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
