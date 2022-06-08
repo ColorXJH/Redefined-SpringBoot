@@ -35,3 +35,9 @@ public class Application {
 //spring data 默认使用hibernate 对于jpa规范的实现
 //jsr303--hibernate validate
 //jsr317--jpa--hibernate
+
+
+//1:书写一个实体类，为他谢谢额上注解表明实体类 标注对应哪个表 对应哪些列
+//2:书写一个接口继承jpa的repository这样就可以实现其内部的增删改查方法和分页
+//3：书写业务类注入，配置好数据库，开始程序测试
+

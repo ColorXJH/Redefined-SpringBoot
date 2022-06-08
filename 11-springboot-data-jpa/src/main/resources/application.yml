@@ -1,6 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.40.128/jpa
+    url: jdbc:mysql://192.168.40.128/sys
     username: root
     password: 2012WananXJH
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update #update 表示更新或者创建数据表 第一次启动没有数据表就会创建该数据表，字段有更新的时候也会去修改
+    show-sql: true #控制台显示sql
