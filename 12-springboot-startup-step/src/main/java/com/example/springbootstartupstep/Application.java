@@ -1,4 +1,4 @@
-package com.example.springbootprinciple;
+package com.example.springbootstartupstep;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,3 @@ public class Application {
     }
 
 }
-
-
-//springboot启动配置原理
-//1：启动原理
-//2：运行流程
-//3：自动配置原理

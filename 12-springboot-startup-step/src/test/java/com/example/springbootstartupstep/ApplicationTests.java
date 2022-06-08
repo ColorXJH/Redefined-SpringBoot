@@ -1,4 +1,4 @@
-package com.example.springbootprinciple;
+package com.example.springbootstartupstep;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
