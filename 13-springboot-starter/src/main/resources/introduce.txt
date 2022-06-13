@@ -1,0 +1,41 @@
+1：我们写了一个自动配置类HelloServiceAutoConfiguration，他会在容器中给我们添加HelloService组件
+2：HelloService组件用到了的属性都是跟HelloProperties类绑定的
+3:我们配置好了一个autoconfigure,在META-INF中指定了启动生效加载
+4:我们的starter(mystarter)的pom中也映入了依赖springboot-starter-autoconfigurer
+5:将这两个模块安装到maven仓库
+6:由于mystarter模块依赖autoconfigurer模块,所以先安装autoconfigurer模块到maven(lifecycle->install)(如果显示测试类不存在记得删除test包)
+7:接下来安装启动器模块mystarter
+
+
+//主要了解springboot的驱动过程，以及listener包中的那些配置和注册类对springboot启动的影响
+
+
+//自定义starter
+    //starter
+        //1:这个场景需要使用到的依赖是什么
+        //2:如何编写自动配置
+            //@Configuration 注解指定类是配置类
+            //@ConditionalOnXXX 在指定条件下自动配置才生效
+            //@AutoConfigureOrder 自动配置类的顺序
+            //@AutoConfigureAfter 自动配置类顺序，在哪个类后启用
+            //@Bean 给容器中添加组件
+            //@ConfigurationPorperties 结合相关xxxProperties类来绑定相关的配置
+            //@EnableConfigurationProperties 绑定属性到配置类，让xxxProperties生效加入到容器中
+       //自动配置类要能加载
+            //将需要启动加载的配置类，配置在META-INF/spring.factories
+        //模式：
+            //启动器（starter）
+                //启动器模块是一个空的jar文件，仅提供辅助性依赖管理，这些依赖可能用于自动装配或者其他类库
+                //命名规约：推荐使用以下命名规约：
+                    //官方命名空间
+                        //前缀 spring-boot-starter
+                        //模式 spring-boot-starter-模块名
+                        //举例 spring-boot-starter-web
+                    //自定义命名空间
+                        //后缀 -spring-boot-starter
+                        //模式 模块-spring-boot-starter
+                        //举例 mybatis-spring-boot-starter
+
+                    //xxx-starter--》xxx-starter-autoconfigurer
+                    //启动器只做依赖导入，专门写一个自动配置模块
+                    //启动器依赖自动配置，别人要使用就依赖启动器，然后自动引入配置就行
