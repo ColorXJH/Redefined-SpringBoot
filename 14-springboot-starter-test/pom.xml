@@ -23,6 +23,10 @@
         </dependency>
 
         <!--引入自定义的starter-->
+        <!--注意在自定义starter的时候一定要定义自己的gav,不要依赖父文件，这里可以成功是因为都在一个项目内-->
+        <!--如果单独起一个项目映入该starter则会报缺少依赖，因为该starter是基于13-springboot-starter构建的-->
+        <!--最好是新建一个空的项目，maven-empty-project 然后建立两个module，然后依次打包两个模块，然后引入其中的一个starter-->
+        <!--这样不会存在引入springboot-mystarter，而去找他的父依赖的问题-->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>springboot-mystarter</artifactId>
