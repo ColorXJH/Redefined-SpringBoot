@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
     //1:配置数据源信息
     //2:使用注解版得mybatis
         //1:@MapperScan指定需要扫描的mapper接口所在得包
-@MapperScan()
+@MapperScan(value = "com.example.springbootcache.mapper")
 @SpringBootApplication
 public class Application {
 
