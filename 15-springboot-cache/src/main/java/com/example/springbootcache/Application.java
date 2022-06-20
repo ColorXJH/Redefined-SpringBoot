@@ -3,6 +3,8 @@ package com.example.springbootcache;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+
 //搭建基本环境
 //1：导入数据库基本文件：可以参考10-springboot-mybatis资源文件sql中得数据文件sql,首先在本机创建好数据库
 //2：创建javabean 封装数据库得数据
@@ -10,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
     //1:配置数据源信息
     //2:使用注解版得mybatis
         //1:@MapperScan指定需要扫描的mapper接口所在得包
+//2:快速体验缓存
+    //步骤：1 开启基于注解的缓存 @EnableCaching   2：标注缓存注解即可
+@EnableCaching
 @MapperScan(value = "com.example.springbootcache.mapper")
 @SpringBootApplication
 public class Application {
