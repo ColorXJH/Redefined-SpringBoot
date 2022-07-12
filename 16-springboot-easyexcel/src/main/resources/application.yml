@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: springboot-easy-excel
+  datasource:
+    username: SCOTT
+    password: 2012WananXJH
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:oracle:thin:@127.0.0.1:1521/myorcl
+    driver-class-name: oracle.jdbc.OracleDriver
+    #    druid连接池配置
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 30000
+server:
+  port: 8090
+  servlet:
+    #    自定义上下文路径
+    context-path: /myApplication
+#mybatis 实体包 和 mapper文件位置配置
+mybatis:
+  type-aliases-package: com.master.bean.*
+  mapper-locations: classpath:mapper/*.xml
+#开启驼峰命名规则
+  configuration:
+    map-underscore-to-camel-case: true

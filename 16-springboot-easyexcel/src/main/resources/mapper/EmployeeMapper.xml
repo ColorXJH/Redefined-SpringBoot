@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbooteasyexcel.dao.EmployeeDao">
+
+
+    <insert id="insertBatch">
+        INSERT INTO  SCOTT.EMPLOYEE(ID,NAME,AGE,CREATE_TIME,ADDR,FLAG,PRICE)
+        <foreach open="("  close=")" collection="list" item="item" index="index" separator="union all" >
+            select #{item.id},#{item.name},#{item.age},#{item.createTime},#{item.addr},#{item.flag},#{item.price}
+            from dual
+        </foreach>
+
+    </insert>
+
+    <select id="queryData" resultType="com.example.springbooteasyexcel.bean.Employee">
+        select * from scott.EMPLOYEE
+    </select>
+
+    <select id="queryCount" resultType="integer">
+        select count(1) from scott.EMPLOYEE
+    </select>
+    <select id="queryDataByPage" resultType="com.example.springbooteasyexcel.bean.Employee">
+        select * from (select ROWNUM r, s.* from scott.EMPLOYEE s )  where r BETWEEN #{start} AND  #{end}
+    </select>
+
+
+
+</mapper>
