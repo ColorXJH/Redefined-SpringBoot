@@ -5,6 +5,8 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.example.springbooteasyexcel.bean.EmpData;
 import com.example.springbooteasyexcel.bean.Employee;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -78,7 +81,7 @@ public class TestController {
                 start=end+1;
             }
             start=end=1;
-            return "读取完成";
+            return "写入完成";
         } finally {
             // 千万别忘记finish 会帮忙关闭流
             if (excelWriter != null) {
@@ -100,7 +103,7 @@ public class TestController {
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String fileName = URLEncoder.encode("测试", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream()).sheet("模板").doWrite(queryData());
+        EasyExcel.write(response.getOutputStream(),Employee.class).sheet("模板").doWrite(queryData());
     }
 
 
@@ -135,6 +138,7 @@ public class TestController {
 
 
     private List<Employee>queryData(){
-        return dao.queryData();
+        List<Employee> list=dao.queryData();
+        return list;
     }
 }
