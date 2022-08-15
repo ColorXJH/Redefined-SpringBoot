@@ -16,7 +16,7 @@ import org.springframework.web.filter.CorsFilter;
 public class MyConfiguration {
 
     //3:定义一个过滤器
-    @Bean
+    //@Bean
     public CorsFilter corsFilter(){
         System.out.println("---colorxjh---");
         CorsConfiguration corsConfiguration=new CorsConfiguration();
