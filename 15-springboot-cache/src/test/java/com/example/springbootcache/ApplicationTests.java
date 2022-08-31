@@ -21,6 +21,18 @@ class ApplicationTests {
     @Autowired
     RedisTemplate myRedisTemplate;//name 默认为：myRedisTemplate
 
+
+    //注意上面两个为同一类的两个bean实例，默认注入名称为bean方法名,如果不按照约定，则需要
+    //1:@Autowired+@Qualifier：(@Autowired默认按照类型，如果此时区分不开，则借助@Qualifier)
+    //@Autowired
+    //@Qualifier("myRedisTemplate")
+    //RedisTemplate myRedisTemplatex;
+    //或者：
+    //2:@Resource注解：默认按照类名
+    //Resource(name="myRedisTemplate")
+    //RedisTemplate myRedisTemplatex;
+    //详情参照resources文件夹下的 Autowired.jpg和Resource.jpg图片流程
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;//操作k-v字符串
 
