@@ -37,4 +37,22 @@ public class EmployeeController {
         String callback =request.getParameter("callback");
         return callback+"({result:'jsonp'})";
     }
+    @GetMapping("/emps/{id}")
+    public Employee getEmps(@PathVariable("id") Integer id){
+        return service.getEmps(id);
+    }
+
+    @GetMapping("/emps/update")
+    public Employee updateEmp(Employee employee){
+        return service.updateEmp(employee);
+    }
+    @GetMapping("/emps/delete/{id}")
+    public String deleteEmp(@PathVariable("id") Integer id){
+        service.deleteEmp(id);
+        return "success";
+    }
+    @GetMapping("/emp/lastName/{lastName}")
+    public Employee getEmpByLastName(@PathVariable("lastName")String lastName){
+        return service.getEmpByLastName(lastName);
+    }
 }

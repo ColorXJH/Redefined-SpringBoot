@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Component;
 
 /**
  * @author ColorXJH
@@ -25,4 +24,7 @@ public interface EmployeeMapper {
 
     @Insert("insert into employee(lastName,email,gender,d_id) values(#{lastName},#{email},#{gender},#{dId})")
     public void insertEmployee(Employee employee);
+
+    @Select("select * from employee where lastName=#{lastName}")
+    public Employee getEmployeeByLastName(String lastName);
 }
