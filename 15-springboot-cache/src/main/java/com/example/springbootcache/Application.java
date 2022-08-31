@@ -16,7 +16,8 @@ import org.springframework.cache.annotation.EnableCaching;
     //步骤：1 开启基于注解的缓存 @EnableCaching   2：标注缓存注解即可
     //默认使用的是ConcurrentMap
 //3:整合redis作为缓存
-    //1:安装redis,使用docker 安装
+    //1:安装redis,使用docker安装
+    //2:引入redis的starter
 @EnableCaching
 @MapperScan(value = "com.example.springbootcache.mapper")
 @SpringBootApplication

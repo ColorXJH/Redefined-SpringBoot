@@ -1,12 +1,14 @@
 package com.example.springbootcache.bean;
 
+import java.io.Serializable;
+
 /**
  * @author ColorXJH
  * @version 1.0
  * @description:
  * @date 2022/6/7 10:12
  */
-public class Employee {
+public class Employee implements Serializable {
     private Integer id;
     private String lastName;
     private Integer gender;
