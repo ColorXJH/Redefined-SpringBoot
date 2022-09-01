@@ -1,13 +1,9 @@
 package com.example.springbootcache.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -15,11 +11,8 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-
-import java.time.Duration;
 
 /**
  * @ClassName: MyRedisConfig
@@ -86,10 +79,14 @@ public class MyRedisConfig {
     }
 
     @Bean //传入上面定义好序列化方式的redis模板
+    //可以配置多对xxxRedisTemplate xxxredisCacheManager配合使用
+    //需要在缓存中指明使用哪个缓存管理器以及在redis操作时指明使用哪个模板
+    //因为缓存管理器需要自动注入到容器中，所以多个无法自动注入，需要为其中一个定义@Primary注解，表明优先使用
     public RedisCacheManager redisCacheManager(RedisTemplate<Object,Object> myRedisTemplate){
         //2.0以上开始就需要传入一个redisCacheWriter参数，并传入上面写的模板对象的连接工厂   内部也是为其设置连接工厂和sleeptime
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(myRedisTemplate.getConnectionFactory());
-        //在redis缓存配置文件中传入刚定义好的缓存配置empRedisTemplate.getValueSerializer()
+        //在redis缓存配置文件中传入刚定义好的缓存配置myRedisTemplate.getValueSerializer()
+        //RedisCacheConfiguration.defaultCacheConfig().usePrefix(false) //可以不配置默认使用key前缀
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair
                         .fromSerializer(myRedisTemplate.getValueSerializer()));
