@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RabbitConsumer {
+
     /**
      * Description: direct消费者  默认交换器接收
      * @Author: ColorXJH
