@@ -3,6 +3,7 @@ package com.example.springbootcache;
 import cn.hutool.json.JSONUtil;
 import com.example.springbootcache.bean.Employee;
 import com.example.springbootcache.mapper.EmployeeMapper;
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,6 +78,15 @@ class ApplicationTests {
     void contextLoads() {
         Employee employeeById = employeeMapper.getEmployeeById(1);
         System.out.println(employeeById);
+    }
+
+    @Autowired
+    private StringEncryptor stringEncryptor;
+    @Test
+    public void jasyptTest() {
+        // 加密
+        System.out.println(stringEncryptor.encrypt("ColorXJH"));
+        System.out.println(stringEncryptor.encrypt("2012WananXJH"));
     }
 
 }

@@ -15,9 +15,7 @@ class ApplicationTests {
     public void jasyptTest() {
         // 加密
         System.out.println(stringEncryptor.encrypt("guest"));
-        // 解密
-        System.out.println(stringEncryptor.decrypt("Uu2equIvUxBezquRPJ7P3yOFrAoConIQ4q+mWcSWsOoVOSeWRrxtg2mwwOfJ5x9S"));
-
+        System.out.println(stringEncryptor.decrypt("rLOMfhvqU1r+6j9NbzVLRZRi8jcQaATKbag3efuew/0eLJqrs7+NU9H18ITMolP6"));
     }
 
 
