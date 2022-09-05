@@ -8,6 +8,8 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * @author ColorXJH
  * @version 1.0
@@ -25,7 +27,7 @@ public class RabbitConsumer {
      * @Return: void
      **/
     //注解指定目标方法来作为消费消息的方法，通过注解参数指定所监听的队列或者Binding，可以配置concurrency设置线程数，主要配置mq链接、声明方面的配置参数
-    @RabbitListener(queuesToDeclare ={@Queue(RabbitCommonConstants.MODEL_QUEUE_NAME_DIRECT1)},concurrency ="1-2" )
+    //@RabbitListener(queuesToDeclare ={@Queue(RabbitCommonConstants.MODEL_QUEUE_NAME_DIRECT1)},concurrency ="1-2" )
     public void doDirectConsumer1(String msg){
         System.out.println("--doDirectConsumer1--:"+msg);
     }
@@ -36,13 +38,13 @@ public class RabbitConsumer {
      * @param msg
      * @Return: void
      **/
-    @RabbitListener(
+    /*@RabbitListener(
             bindings = {@QueueBinding(
                 exchange = @Exchange(value = RabbitCommonConstants.MODEL_EXCHANGE_DIRECT_NAME,type = ExchangeTypes.DIRECT),
                     value = @Queue(RabbitCommonConstants.MODEL_QUEUE_NAME_DIRECT2),
                     key = RabbitCommonConstants.MODEL_QUEUE_NAME_DIRECT2
             )},concurrency = "1-2"
-    )
+    )*/
     public void doDirectConsumer2(String msg){
         System.out.println("--doDirectConsumer2--:"+msg);
     }
@@ -55,10 +57,10 @@ public class RabbitConsumer {
      * @param msg
      * @Return: void
      **/
-    @RabbitListener(bindings = @QueueBinding(
+    /*@RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = RabbitCommonConstants.MODEL_EXCHANGE_FANOUT_NAME,type = ExchangeTypes.FANOUT),
             value =@Queue(value = RabbitCommonConstants.MODEL_QUEUE_NAME_FANOUT1)
-    ),concurrency = "1-2")
+    ),concurrency = "1-2")*/
     public void doFanoutConsumer1(String msg){
         System.out.println("--doFanoutConsumer1--:"+msg);
     }
@@ -69,10 +71,10 @@ public class RabbitConsumer {
      * @param msg
      * @Return: void
      **/
-    @RabbitListener(bindings = @QueueBinding(
+    /*@RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = RabbitCommonConstants.MODEL_EXCHANGE_FANOUT_NAME,type = ExchangeTypes.FANOUT),
             value =@Queue(value = RabbitCommonConstants.MODEL_QUEUE_NAME_FANOUT2)
-    ),concurrency = "1-2")
+    ),concurrency = "1-2")*/
     public void doFanoutConsumer2(String msg){
         System.out.println("--doFanoutConsumer2--:"+msg);
     }
@@ -83,10 +85,10 @@ public class RabbitConsumer {
      * @param msg
      * @Return: void
      **/
-    @RabbitListener(bindings = @QueueBinding(
+    /*@RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = RabbitCommonConstants.MODEL_EXCHANGE_FANOUT_NAME,type = ExchangeTypes.FANOUT),
             value = @Queue(value = RabbitCommonConstants.MODEL_QUEUE_NAME_FANOUT3)
-    ),concurrency = "1-2")
+    ),concurrency = "1-2")*/
     public void doFanoutConsumer3(String msg){
         System.out.println("--doFanoutConsumer3--:"+msg);
     }
@@ -98,11 +100,11 @@ public class RabbitConsumer {
      * @param msg
      * @Return: void
      **/
-    @RabbitListener(bindings = @QueueBinding(
+    /*@RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = RabbitCommonConstants.MODEL_EXCHANGE_TOPIC_NAME,type = ExchangeTypes.TOPIC),
             value = @Queue(value = RabbitCommonConstants.MODEL_QUEUE_INFO_TOPIC,autoDelete = "true"),
             key="model.queue.*.topic"
-    ))
+    ))*/
     public void doTopicInfoConsumer(String msg){
         System.out.println("--doTopicInfoConsumer--:"+msg);
     }
@@ -126,4 +128,9 @@ public class RabbitConsumer {
     //匹配标识符：* 表示单个，# 表示匹配多
 
     //性能：fanout > direct > topic
+
+    @RabbitListener(queues = "model.queue.name.topic123")
+    public void testTopic123(Map<String,Object> map){
+        System.out.println(map);
+    }
 }
