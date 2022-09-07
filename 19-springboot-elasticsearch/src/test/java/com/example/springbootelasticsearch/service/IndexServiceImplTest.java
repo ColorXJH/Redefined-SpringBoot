@@ -6,12 +6,11 @@ import co.elastic.clients.elasticsearch.indices.IndexSettings;
 import co.elastic.clients.util.ObjectBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.function.Function;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @ClassName: IndexServiceImplTest
@@ -20,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @Datetime: 2022/9/6 20:58
  * @author: ColorXJH
  */
+@SpringBootTest
 class IndexServiceImplTest {
     @Autowired
     private IndexService indexService;

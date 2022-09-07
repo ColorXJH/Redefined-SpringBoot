@@ -3,21 +3,19 @@ package com.example.springbootelasticsearch.service;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
+import com.alibaba.fastjson.JSON;
 import com.example.springbootelasticsearch.entity.UserVO;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.BiConsumer;
-
-import com.alibaba.fastjson.JSON;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @ClassName: DocumentDemoServiceImplTest
@@ -26,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @Datetime: 2022/9/6 21:03
  * @author: ColorXJH
  */
+@SpringBootTest
 class DocumentDemoServiceImplTest {
     private final static String INDEX_NAME = "db_api_idx_uservo";
 

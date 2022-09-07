@@ -9,54 +9,18 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>springboot-elasticsearch</artifactId>
+    <artifactId>springboot2-es7</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>19-springboot-elasticsearch</name>
-    <description>19-springboot-elasticsearch</description>
+    <name>springboot2-es7</name>
+    <description>springboot2-es7</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--SpringBoot是2.2.0.RELEASE才兼容elasticsearch 7.x-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <!--es7及其以下版本使用，es7和es8不兼容-->
-        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>-->
-
-        <!-- 不加这个，configuration类中，IDEA总会添加一些提示 -->
-        <!--生成配置元数据,一个注解处理器,在编译阶段干活的-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- elasticsearch8引入依赖  start -->
-        <dependency>
-            <groupId>co.elastic.clients</groupId>
-            <artifactId>elasticsearch-java</artifactId>
-            <version>8.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.13.1</version>
-        </dependency>
-        <!-- 使用spring boot Maven插件时需要添加该依赖 -->
-        <dependency>
-            <groupId>jakarta.json</groupId>
-            <artifactId>jakarta.json-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <!-- elasticsearch8引入依赖  end -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.28</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,6 +37,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
