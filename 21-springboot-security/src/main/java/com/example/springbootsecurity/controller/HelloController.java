@@ -2,6 +2,8 @@ package com.example.springbootsecurity.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author ColorXJH
@@ -16,6 +18,31 @@ public class HelloController {
     public String sayHello(){
         return "hello";
         //return "/templates/hello.html"
+    }
+
+    @GetMapping("/showMain")
+    public String showMain(){
+        return "main";
+    }
+
+    @GetMapping("/showFail")
+    public String showFail(){
+        return "fail";
+    }
+
+    @GetMapping("/user/user1")
+    public String user(){
+        return "user";
+    }
+    @GetMapping("/admin/admin1")
+    public String admin(){
+        return "admin";
+    }
+
+
+    @GetMapping("/logins")
+    public String login(){
+        return "login";
     }
 }
 

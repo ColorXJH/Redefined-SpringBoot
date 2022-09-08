@@ -6,6 +6,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,31 +40,40 @@ public class SecurityConfig {
     //该过滤链返回值为SecurityFilterChain(接口)的实体类
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /*return http
-                .formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/showMain")
-                .failureForwardUrl("/showFail")
-                .and().authorizeHttpRequests()
-                .antMatchers("/showLogin","login.html").permitAll()
-                .antMatchers("/showFail","fail.html").permitAll()
-                .antMatchers("/static/**").permitAll()
-                .antMatchers("/test/**").permitAll()
-                .antMatchers("/user/**").hasAuthority("user")
+        return  http.authorizeRequests()
+                //角色权限配置
+                .antMatchers("/user/**").hasAnyRole("user")
+                .antMatchers("/admin/**").hasAnyRole("admin")
+                //登录配置
+                .antMatchers("/doLogin","/logins","/static/*/**").permitAll() //和表单登录相关的接口以及静态资源统统都直接通过
+                //其他路径一律验证
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable()//基于 token，不需要 csrf
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 基于 token，不需要 session
-                .and().build();*/
+                //登出配置
+                .logout()
+                .logoutUrl("/logout1")
+                .logoutSuccessUrl("/login").and()
+                .formLogin()
+                //指定登录页的路径
+                .loginPage("/logins")
+                //指定自定义form表单请求的路径(逻辑默认springsecurity处理，当然我们也可以自己处理用户数据校验)
+                .loginProcessingUrl("/doLogin")
+                //验证失败跳转路径
+                .failureUrl("/showFail")
+                //登录成功后的跳转路径
+                .defaultSuccessUrl("/showMain")
+                //.failureForwardUrl("/showFail")
+                //.successForwardUrl("/showMain")
+                //必须允许所有用户访问我们的登录页（例如未验证的用户，否则验证流程就会进入死循环）
+                //这个formLogin().permitAll()方法允许所有用户基于表单登录访问这个page。
+                .permitAll()
+                .and().csrf().disable().build();
 
-        return http
+        /*return http
                 .authorizeHttpRequests(auth->auth.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-                .build();
+                .build();*/
     }
     //更改默认的用户名和密码
     //https://www.yisu.com/zixun/720908.html
