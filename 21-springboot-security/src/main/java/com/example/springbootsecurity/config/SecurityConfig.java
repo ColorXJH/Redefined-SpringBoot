@@ -70,6 +70,7 @@ public class SecurityConfig {
     @Bean
     UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager userDetailsManager=new InMemoryUserDetailsManager();
-        userDetailsManager.createUser(User.withUsername("ColorXJH").password());
+        userDetailsManager.createUser(User.withUsername("ColorXJH").password("$2a$10$Tsm7vu9gEaRHck/ZXwQH0.sDf5P7T9PGZsIoUWCAuF183FQxAxvKO").roles("user").build());
+        return userDetailsManager;
     }
 }
