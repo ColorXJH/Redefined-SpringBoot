@@ -1,19 +1,22 @@
 package com.example.springbootsecurity.config;
 
+import com.example.springbootsecurity.service.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 /**
  * @author ColorXJH
@@ -41,9 +44,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return  http.authorizeRequests()
-                //角色权限配置
-                .antMatchers("/user/**").hasAnyRole("user")
-                .antMatchers("/admin/**").hasAnyRole("admin")
+                //角色权限配置,也可以使用注解
+                //.antMatchers("/user/**").hasAnyRole("user")
+                //.antMatchers("/admin/**").hasAnyRole("admin")
                 //登录配置
                 .antMatchers("/doLogin","/logins","/static/*/**").permitAll() //和表单登录相关的接口以及静态资源统统都直接通过
                 //其他路径一律验证
@@ -67,6 +70,15 @@ public class SecurityConfig {
                 //必须允许所有用户访问我们的登录页（例如未验证的用户，否则验证流程就会进入死循环）
                 //这个formLogin().permitAll()方法允许所有用户基于表单登录访问这个page。
                 .permitAll()
+                //设置记住我--基于token
+                .and().rememberMe()
+                .key(rememberMeKey)
+                .rememberMeServices(rememberMeServices())
+                //记住我-数据库持久化功能
+                /*.and().rememberMe()
+                .userDetailsService(userDetailsService())
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(60)*/
                 .and().csrf().disable().build();
 
         /*return http
@@ -77,10 +89,57 @@ public class SecurityConfig {
     }
     //更改默认的用户名和密码
     //https://www.yisu.com/zixun/720908.html
-    @Bean
+   /* @Bean
     UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager userDetailsManager=new InMemoryUserDetailsManager();
-        userDetailsManager.createUser(User.withUsername("ColorXJH").password("$2a$10$Tsm7vu9gEaRHck/ZXwQH0.sDf5P7T9PGZsIoUWCAuF183FQxAxvKO").roles("user").build());
+        userDetailsManager.createUser(User.withUsername("ColorXJH").password("$2a$10$x.yYZd3TQFCw.QPUGZXP7etbMyc0ixBcjz8G93jb9vyHm8s5NPK..").roles("user").build());
         return userDetailsManager;
+    }*/
+
+    @Bean
+    UserDetailsService userDetailsService(){
+        return new UserDetailServiceImpl();
+    }
+
+    //关于记住我，他们都有一个公共的RememberMeServices接口，对应不同的实现，一种是
+        //1:TokenBasedRememberMeServices:简单的token加密服务，不安全们获取到
+        //2:PersistentTokenBasedRememberMeServices:持久化的token服务
+
+    /** 方式1 :https://blog.51cto.com/u_11142439/3078349
+     * 记住我功能，持久化的token服务
+     * @return
+     */
+    //@Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        //数据源设置
+        tokenRepository.setDataSource(dataSource);
+        //启动的时候创建表，这里只执行一次，第二次就注释掉，否则每次启动都重新创建表
+        //tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
+    }
+
+    //数据源
+    @Resource
+    private DataSource dataSource;
+
+
+    /** 方式2:https://blog.51cto.com/u_11142439/3078370
+     * 记住我功能，基于简单加密token的方案
+     * @return
+     */
+
+    /** 用来防止token被修改的key */
+    private String rememberMeKey = "ColorXJH";
+    @Bean
+    public RememberMeServices rememberMeServices() {
+        TokenBasedRememberMeServices tbrms = new TokenBasedRememberMeServices(rememberMeKey, userDetailsService());
+        // [可选]需要配置cookie的过期时间，默认过时时间1209600秒，即2个星期。这里设置cookie过期时间为60秒
+        tbrms.setTokenValiditySeconds(60*3);
+        // 设置checkbox的参数名为rememberMe（默认为remember-me），
+        //注意如果是ajax请求，参数名不是checkbox的name而是在ajax的data里
+        //tbrms.setParameter("rememberMe");
+        return tbrms;
     }
 }
+

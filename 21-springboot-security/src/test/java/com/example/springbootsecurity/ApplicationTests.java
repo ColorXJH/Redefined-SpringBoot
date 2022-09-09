@@ -19,7 +19,10 @@ class ApplicationTests {
     @Test
     void contextLoads() {
         BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-        System.out.println(encoder.encode("2012WananXJH"));;
+        System.out.println(encoder.encode("123"));
+        System.out.println(encoder.encode("234"));
+        System.out.println(encoder.encode("345"));
+        System.out.println(encoder.encode("456"));
     }
 
 }

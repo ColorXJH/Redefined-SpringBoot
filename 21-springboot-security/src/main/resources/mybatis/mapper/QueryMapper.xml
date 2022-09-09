@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootsecurity.dao.QueryDao">
+
+
+    <select id="queryByUserName" resultType="com.example.springbootsecurity.entity.User">
+            select * from tb_user where username=#{username}
+    </select>
+    <select id="queryRolesByUserName" resultType="com.example.springbootsecurity.entity.Role">
+        select a.* from tb_role a ,tb_user b, tb_user_role c where  a.id=c.role_id and b.id=c.user_id and b.username=#{username}
+    </select>
+    <select id="queryPermissionsByUserName" resultType="com.example.springbootsecurity.entity.Permission">
+        select d.* from tb_role a ,tb_user b, tb_user_role c , tb_permission d, tb_role_permission e where  a.id=c.role_id and b.id=c.user_id
+        and a.id=e.role_id and d.id=e.permission_id and b.username=#{username}
+    </select>
+
+
+</mapper>

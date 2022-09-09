@@ -1,9 +1,8 @@
 package com.example.springbootsecurity.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author ColorXJH
@@ -30,10 +29,14 @@ public class HelloController {
         return "fail";
     }
 
+    @PreAuthorize("hasAuthority('query')")
     @GetMapping("/user/user1")
     public String user(){
         return "user";
     }
+
+
+    @PreAuthorize("hasRole('admin')")
     @GetMapping("/admin/admin1")
     public String admin(){
         return "admin";
