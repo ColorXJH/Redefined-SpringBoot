@@ -1,6 +1,8 @@
 package com.example.springcloudconsumer.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author ColorXJH
@@ -10,4 +12,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TestService {
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    public String sayHelloToWho(String name){
+        return restTemplate.getForObject("http://PROVIDER/hello/"+name,String.class);
+    }
 }
