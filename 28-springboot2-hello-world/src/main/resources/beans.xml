@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="user01" class="com.example.springboot2helloworld.bean.User">
+            <constructor-arg index="0" value="user001"/>
+            <constructor-arg index="1" value=""/>
+            <property name="name" value="18"/>
+            <property name="age" value="18"/>
+        </bean>
+
+    <bean id="cat01" class="com.example.springboot2helloworld.bean.Pet">
+        <constructor-arg value="tomcat"/>
+        <property name="name" value="tomcat"/>
+    </bean>
+</beans>

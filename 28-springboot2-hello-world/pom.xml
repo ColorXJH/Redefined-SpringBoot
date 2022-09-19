@@ -16,6 +16,8 @@
     <name>28-springboot2-hello-world</name>
     <description>28-springboot2-hello-world</description>
     <!--打包方式默认为jar,所以也可以不写-->
+    <packaging>jar</packaging>
+    <!--重写/自定义一些属性-->
     <properties>
         <java.version>1.8</java.version>
     </properties>
