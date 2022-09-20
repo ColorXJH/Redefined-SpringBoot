@@ -1,0 +1,32 @@
+person:
+  dtest: 2022/09/12
+  dboolean: true
+  dstring: "color6 \r\n xjh"
+  dnumber: 8
+  dnull: null
+  dlist: [ 1,2,3,4 ]
+  dlist2:
+    - 1
+    - 2
+    - 3
+    - 5
+  dmap: { name:color,age:28 }
+  dmap2:
+    name: color
+    age: 28
+  interest: [ a,b,c,d ]
+  car:
+    name: BMW
+    price: 400000
+  salary:
+    - 99.2
+    - 232.44
+    - 43.3
+  allCars:
+    good:
+      - {name: BMW,price: 400000}
+      - name: Bensz
+        price: 500000
+    bad:
+      - {name: QR,price: 2000}
+      - {name: ST,price: 2333}

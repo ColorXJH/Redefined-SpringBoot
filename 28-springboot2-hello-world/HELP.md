@@ -68,3 +68,24 @@ classes = {AutoConfigurationExcludeFilter.class}
 > loadFactoryNames:该方法加载所有配置文件META-INF/spring.factories文件中的配置类
 > spring-boot-autoconfigure-2.7.3.jar包中的配置文件，
 > xxxAutoConfiguration---》很多组件---》xxxProperties类加载配置---》application.properties修改配置
+
+## YAML 使用
+- 基本语法
+> k/v kv之间有空格
+> 大小写敏感
+> 使用缩进表示层级关系
+> 缩进不允许使用tab,只允许使用空格
+> 缩进的空格数不重要，只要相同层级的元素左对齐即可
+> ‘#’ 表示注解
+> ‘’与""表示字符串内容，会被转义/不转义,字符串默认不加引号
+- 数据类型
+> 字面量: 单个的，不可再分割的值,date boolean string number null
+> k:v
+> 对象: 键值对的集合: map hash set object
+> 行内写法: k: {k1:v1,k2:v2,k3:v3}
+> 或者：
+> k:
+>   k1:v1
+>   k2:v2
+> 详情请见application.yml
+> 

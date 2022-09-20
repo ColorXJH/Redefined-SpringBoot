@@ -2,6 +2,7 @@ package com.example.springboot2helloworld.controller;
 
 import com.example.springboot2helloworld.bean.MyBeans;
 import com.example.springboot2helloworld.bean.MyCar;
+import com.example.springboot2helloworld.bean.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,4 +29,11 @@ public class HelloController {
     }
     @Autowired
     MyCar car;
+
+    @Autowired
+    Person person;
+    @GetMapping("/person")
+    public Object getPerson(){
+        return person;
+    }
 }
