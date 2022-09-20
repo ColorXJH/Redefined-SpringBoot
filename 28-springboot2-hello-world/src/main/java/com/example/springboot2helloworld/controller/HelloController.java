@@ -1,5 +1,8 @@
 package com.example.springboot2helloworld.controller;
 
+import com.example.springboot2helloworld.bean.MyBeans;
+import com.example.springboot2helloworld.bean.MyCar;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @GetMapping("/test")
     public String sayHello(){
+        System.out.println("--beans--"+beans);
+        System.out.println("--car--"+car);
         return "Hello-World";
     }
+
+    MyBeans beans;
+    @Autowired
+    public void setBeans(MyBeans beans){
+        this.beans=beans;
+    }
+    @Autowired
+    MyCar car;
 }

@@ -1,8 +1,10 @@
 package com.example.springboot2helloworld.config;
 
+import com.example.springboot2helloworld.bean.MyCar;
 import com.example.springboot2helloworld.bean.Pet;
 import com.example.springboot2helloworld.bean.Pig;
 import com.example.springboot2helloworld.bean.User;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.ImportResource;
 @Import(Pig.class)
 @ImportResource(locations = {"classpath:beans.xml"})//加载外部资源
 @Configuration
+@EnableConfigurationProperties(MyCar.class)
 public class MyConfig {
 
     @Bean //方法名作为组件id

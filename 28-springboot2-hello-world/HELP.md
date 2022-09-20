@@ -35,3 +35,36 @@ The following guides illustrate how to use some features concretely:
 > 给容器中自动创建组件(调用类的无参构造器)，默认组件的名字是全类名：com.xx.xx.Pig
 * @Conditional
 > 条件装备，有很多派生注解
+* @ConfigurationProperties+@Component
+> 配置属性，配置绑定，包含属性prefix,表示属性前缀，只有在容器中的组件才会拥有springboot提供的强大功能
+> @ConfigurationProperties+@Component配置导入
+* @EnableConfigurationProperties+@ConfigurationProperties
+> 开启配置类自动绑定功能，并自动导入bean到容器中,注意只能绑定application.properties文件
+* @SpringBootApplication
+> 该注解由其他多个注解合成而成：@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+excludeFilters = {@Filter(
+type = FilterType.CUSTOM,
+classes = {TypeExcludeFilter.class}
+), @Filter(
+type = FilterType.CUSTOM,
+classes = {AutoConfigurationExcludeFilter.class}
+)}
+)
+* @SpringBootConfiguration
+> 该注解表示配置类
+* @ComponentScan
+> 该注解表示包扫描
+* @EnableAutoConfiguration 
+> 该注解包含 @@AutoConfigurationPackage:利用Register给容器中导入一些列组件，将指定的一个包下的所有组件都导入进来
+* @Import({AutoConfigurationImportSelector.class})
+> getAutoConfigurationEntry利用这个方法给容器中批量导入==》this.getCandidateConfigurations(annotationMetadata, attributes);
+> 获取所有需要导入到容器中的配置类
+> loadFactoryNames:该方法加载所有配置文件META-INF/spring.factories文件中的配置类
+> spring-boot-autoconfigure-2.7.3.jar包中的配置文件，
+> xxxAutoConfiguration---》很多组件---》xxxProperties类加载配置---》application.properties修改配置
