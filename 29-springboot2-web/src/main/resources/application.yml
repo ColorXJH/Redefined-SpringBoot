@@ -1,6 +1,16 @@
+#spring:
+#  mvc:
+#    static-path-pattern: /resources/** #更改静态资源访问路径
+#  web:
+#    resources:
+#      static-locations: classpath:/haha #更改静态资源存放位置
+#      add-mappings: false #禁用静态资源
+#      cache:
+#        1100
+
+#手动开启rest风格使用（表单方式，postman默认支持这些方式则无需开启配置）
 spring:
   mvc:
-    static-path-pattern: /resources/** #更改静态资源访问路径
-  web:
-    resources:
-      static-locations: classpath:/haha #更改静态资源存放位置
+    hiddenmethod:
+      filter:
+        enabled: true
