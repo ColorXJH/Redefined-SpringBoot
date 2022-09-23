@@ -20,5 +20,17 @@
       <input name="_method" type="hidden" value="PUT">
       <input type="submit" value="rest-put提交">
   </form>
+
+  <!--
+  /cars/path?a=xxx&b=xxx   queryString 查询字符串
+  /cars/{path;a=xxx;b=xxx,xx,xxxx} 矩阵变量
+  页面开发，cookie禁用了，session里面的内容怎么使用
+  session.set(a,b)==》jessionId==>cookie==>每次请求携带
+  url重写： /abc;jessionid=xxx  把cookie的值使用矩阵变量传递过来
+  矩阵变量都是在路径中的，注意
+  -->
+<a href="/car/sell;low=34;brand=byd,audi,bmw">@MatrixVariable矩阵变量</a>
+<a href="/car/sell;low=34;brand=byd;brand=bmw;brand=audi">矩阵变量</a>
+<a href="/boss/1;age=20/2;age=10">矩阵变量</a>
 </body>
 </html>

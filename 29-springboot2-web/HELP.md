@@ -36,3 +36,14 @@ The following guides illustrate how to use some features concretely:
 > 将图标命名为favicon.ico 并放置在静态资源路径下，刷新ctrl+F5 就能得到自定义图标
 
 ## spring配置bean中的参数都是默认去容器中拿
+
+## springboot处理矩阵变量
+- 矩阵变量需要再springboot中手动开启
+- 根据RFC3986规范，矩阵变量应当绑定在路径变量中
+- 若是有多个矩阵变量，应当使用英文符号";"进行分割
+- 若是一个矩阵变量有多个值则应当使用英文符号“，”进行分割，或之命名多个重复的key即可
+
+## 各种类型参数解析原理
+> handlerMapping中找到能处理请求的Handler(Controller.method),然后为当前Handler找一个适配器
+> HandlerAdapter,然后该参数解析器adapter会invokeHandlerMethod
+> 接下来是返回值处理器，解析当前返回男鞋格式的数据，比如model modelandview view String  responsBody....

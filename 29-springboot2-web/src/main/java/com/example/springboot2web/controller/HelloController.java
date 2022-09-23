@@ -72,6 +72,25 @@ public class HelloController {
         map.put("content",content);
         return map;
     }
-
+    //springboot默认禁用掉了矩阵变量，需要手动开启
+    //原理：对于路径的处理，都是使用UrlPathHelper进行解析,其中属性removeSemicolonContent(移除分号内容)用于支持矩阵变量
+    //注意矩阵变量需要绑定到路径变量中
+    @GetMapping("/car/{sell}")
+    public Map carSell(@PathVariable("sell") String sell,@MatrixVariable("low") Integer low,@MatrixVariable("brand") List<String>brand){
+        Map<String ,Object>map=new HashMap<>();
+        map.put("low",low);
+        map.put("brand",brand);
+        map.put("sell",sell);
+        return map;
+    }
+    //必须有url路径变量{path}才行
+    @GetMapping("/boss/{bossId}/{empId}")
+    public Map bossSell(@MatrixVariable(value = "age",pathVar = "bossId")Integer bossAge,
+                           @MatrixVariable(value = "age",pathVar = "empId")Integer empAge){
+        Map<String ,Object>map=new HashMap<>();
+        map.put("bossAge",bossAge);
+        map.put("empAge",empAge);
+        return map;
+    }
 
 }
