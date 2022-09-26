@@ -1,5 +1,6 @@
 package com.example.springboot2web.controller;
 
+import com.example.springboot2web.bean.Person;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -91,6 +92,14 @@ public class HelloController {
         map.put("bossAge",bossAge);
         map.put("empAge",empAge);
         return map;
+    }
+
+    @RequestMapping("/person")
+    public Person handlePerson(Person person){
+        person.setUserName("xjh");
+        person.setAge(22);
+        System.out.println(person);
+        return person;
     }
 
 }

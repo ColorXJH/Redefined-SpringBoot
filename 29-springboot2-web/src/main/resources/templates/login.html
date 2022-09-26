@@ -20,6 +20,14 @@
       <input name="_method" type="hidden" value="PUT">
       <input type="submit" value="rest-put提交">
   </form>
+  <form action="/person" method="post">
+      姓名：<input name="userName"  value="张三">
+      年龄：<input name="age" value="18">
+      生日：<input name="birth" value="2022/12/12">
+      宠物：<input name="pet" value="cat,3">
+      <input type="submit" value="自定义converter">
+  </form>
+
 
   <!--
   /cars/path?a=xxx&b=xxx   queryString 查询字符串

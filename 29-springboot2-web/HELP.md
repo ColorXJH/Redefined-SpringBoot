@@ -47,3 +47,12 @@ The following guides illustrate how to use some features concretely:
 > handlerMapping中找到能处理请求的Handler(Controller.method),然后为当前Handler找一个适配器
 > HandlerAdapter,然后该参数解析器adapter会invokeHandlerMethod
 > 接下来是返回值处理器，解析当前返回男鞋格式的数据，比如model modelandview view String  responsBody....
+
+## servlet api 参数解析原理
+## model view map model-and-view 原理
+## 自定义参数绑定原理
+## 自定义Converter原理
+## returnValueHandler原理
+## HttpMessageConverter原理
+## 内容协商原理
+- 为了方便内容协商，springmvc开启基于请求参数的内容协商功能

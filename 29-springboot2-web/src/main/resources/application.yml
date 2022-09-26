@@ -14,3 +14,7 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+# 开启基于请求参数的内容协商功能  ?format=xml
+    contentnegotiation:
+      favor-parameter: true
+

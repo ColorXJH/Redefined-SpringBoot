@@ -1,7 +1,9 @@
 package com.example.springboot2web.config;
 
+import com.example.springboot2web.bean.Pet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,6 +34,20 @@ public class WebConfig implements WebMvcConfigurer {
         UrlPathHelper helper=new UrlPathHelper();
         helper.setRemoveSemicolonContent(false);
         configurer.setUrlPathHelper(helper);
+    }
+
+    //自定义转换器
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(String.class,Pet.class,(x)->{
+            if(x!=null){
+                Pet pet=new Pet();
+                pet.setName(x.split(",")[0]);
+                pet.setAge(Integer.parseInt(x.split(",")[1]));
+                return pet;
+            }
+            return null;
+        });
     }
 
     //2:容器中放一个WebMvcConfigurer,重写其方法
