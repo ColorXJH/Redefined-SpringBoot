@@ -1,6 +1,7 @@
 package com.example.springboot2web.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,5 +47,12 @@ public class ReIndexController {
         map.put("code",code);
         map.put("o",o);
         return map;
+    }
+    @GetMapping("/success2")
+    public String success2(Model model){
+        //model数据会被放在请求域中==request.setAttribute()
+        model.addAttribute("msg","HELLO-WORLD");
+        model.addAttribute("link","http://www.baidu.com");
+        return "success";
     }
 }

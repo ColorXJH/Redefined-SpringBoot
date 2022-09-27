@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!--名称空间，有提示-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="ColorXJH">Title</title>
+</head>
+<body>
+    <h1 th:text="${msg}">哈哈</h1>
+<h2>
+    <a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#link-urls" th:href="${link}">百度</a>
+    <!--@{}会当作字符串拼接到href，并且包含上下文路径（如果以/开头）-->
+    <a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#link-urls" th:href="@{/link}">百度</a>
+</h2>
+</body>
+</html>
