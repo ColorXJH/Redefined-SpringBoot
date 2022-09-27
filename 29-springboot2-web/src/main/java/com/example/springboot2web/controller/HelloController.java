@@ -1,6 +1,7 @@
 package com.example.springboot2web.controller;
 
 import com.example.springboot2web.bean.Person;
+import com.example.springboot2web.bean.Pet;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -99,6 +100,7 @@ public class HelloController {
         person.setUserName("xjh");
         person.setAge(22);
         System.out.println(person);
+        person.setPet(new Pet());
         return person;
     }
 

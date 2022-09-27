@@ -10,6 +10,6 @@ import lombok.Data;
  */
 @Data
 public class Pet {
-    String name;
-    Integer age;
+    String name="pig";
+    Integer age=2;
 }
