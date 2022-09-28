@@ -38,4 +38,9 @@ public class IndexController {
         //是否登录成功，拦截器，过滤器，这里偷懒用HttpSession
         return "main";
     }
+    @GetMapping("/log_out")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "login";
+    }
 }

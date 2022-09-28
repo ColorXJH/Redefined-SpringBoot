@@ -26,7 +26,16 @@ public class MyWebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(urlInterceptor )
                 .addPathPatterns("/**")
+                //这种方法配合配置文件spring.mvc.static-path-pattern=/static/** 或者上方addResourceHandlers写法，可以设置静态资源访问的路径从/static开始
+                //就是说以后访问静态资源都必须要带前缀/static，前端页面的href等静态资源加载路径都要添加前缀
                 .excludePathPatterns("/","/login","/static/**");
+
+                //2:但是如果我们使用这种方法，就不需要改变前缀，表示要放行哪些静态资源
+                //.excludePathPatterns("/","/login","/css/**","/js/**","/fonts/**","/images/**");
+
+
+                //这两种情况究其原因：static是执行完controller之后在view视图接口的render里面拼接的，
+                //拦截器执行时机在controller之前，所以不行
     }
 }
 
