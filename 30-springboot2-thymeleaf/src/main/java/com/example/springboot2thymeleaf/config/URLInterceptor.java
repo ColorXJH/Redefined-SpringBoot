@@ -24,7 +24,7 @@ public class URLInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(request.getSession().getAttribute("loginUser")!=null){
             User user=(User)request.getSession().getAttribute("loginUser");
-            if(user!=null&&user.getUserName().equals("color")){
+            if(user!=null&&user.getUserName().equals("Color")){
                 return true;
             }
         }

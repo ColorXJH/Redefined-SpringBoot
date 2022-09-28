@@ -32,6 +32,7 @@ public class IndexController {
         model.addAttribute("msg","账号密码错误");
         return "login";
     }
+    //template下默认是无法访问的，需要经过controller处理，默认只能访问/static 文件夹以及springboot自定义的那些文件夹
     @GetMapping("/main.html")
     public String mainPage(){
         //是否登录成功，拦截器，过滤器，这里偷懒用HttpSession

@@ -3,6 +3,7 @@ package com.example.springboot2thymeleaf.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -15,14 +16,42 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyWebConfig implements WebMvcConfigurer {
     @Autowired
     URLInterceptor urlInterceptor;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
         registry.addInterceptor(urlInterceptor )
                 .addPathPatterns("/**")
-                //不生效可以在static目录assert下定一个新的文件夹然后/assert/**.同样可以达到配置文件
-                //spring.mvc.static-path-pattern=/static/** + .excludePathPatterns("/","/login","/static/**");
-                //的目的
                 .excludePathPatterns("/","/login","/static/**");
     }
 }
+
+
+/*
+ 关于springboot2静态资源被拦截的问题
+         springBoot版本问题
+         SpringBoot2.X不再自动放行静态资源，
+         添加拦截器后需要在mvc配置中exclude静态资源路径，
+         即在excludePathPatterns()方法中添加"/static/**"参数。
+
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+            .excludePathPatterns("/index.html","/","/user/login","/static/**");
+        }
+
+
+        在application.properties文件中添加
+// spring.mvc.static-path-pattern  配置映射路径规则 默认值是/**
+// spring.resources.static-locations 配置静态资源位置
+        spring.mvc.static-path-pattern=/static*/
+/**
+ // 如果不配置的话，默认是spring.mvc.static-path-pattern=/**
+ 更改页面中的href及src
+ springboot添加拦截器之后，不认springboot之前默认访问的static文件夹，需在原有访问路径前添加/static/
+ 添加拦截器前 <link rel="stylesheet" th:href="@{plugins/layui/css/layui.css}">
+ 添加拦截器后 <link rel="stylesheet" th:href="@{/static/plugins/layui/css/layui.css}">*/
