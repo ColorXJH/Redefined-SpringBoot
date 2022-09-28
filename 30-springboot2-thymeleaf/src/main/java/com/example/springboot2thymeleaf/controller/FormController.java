@@ -31,8 +31,8 @@ public class FormController {
             image.transferTo(new File(filepath+"\\1.jpg"));
         }
         if(photos.length>0){
-            for(int i=0){
-
+            for(int i=0;i<photos.length;i++){
+                photos[i].transferTo(new File(filepath+"\\"+i+".png"));
             }
         }
         return "/main";
