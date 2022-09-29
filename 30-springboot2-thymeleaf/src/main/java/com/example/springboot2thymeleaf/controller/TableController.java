@@ -2,6 +2,7 @@ package com.example.springboot2thymeleaf.controller;
 
 import com.example.springboot2thymeleaf.bean.Person;
 import com.example.springboot2thymeleaf.bean.User;
+import com.example.springboot2thymeleaf.exception.UserToManyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,8 @@ import java.util.List;
 @Controller
 public class TableController {
     @GetMapping("/basic_table")
-    public String basicTable(){
+    public String basicTable(Integer a){
+        int x=10/a;
         return "table/basic_table";
     }
     @GetMapping("/dynamic_table")
@@ -28,6 +30,9 @@ public class TableController {
         persons.add(new Person("2","张4",23,"123.12.com"));
         persons.add(new Person("3","张5",24,"123.13.com"));
         persons.add(new Person("4","张6",25,"123.14.com"));
+        if(persons.size()>3){
+            throw new UserToManyException();
+        }
         User users=new User();
         users.setRecords(persons);
         users.setPages(2);
