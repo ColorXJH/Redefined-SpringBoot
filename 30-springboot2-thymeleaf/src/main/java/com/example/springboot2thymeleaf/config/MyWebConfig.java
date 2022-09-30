@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyWebConfig implements WebMvcConfigurer {
     @Autowired
     URLInterceptor urlInterceptor;
-
+    //访问/static/** 下的所有请求，都去classpath:/static/下面进行匹配相应的资源
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
