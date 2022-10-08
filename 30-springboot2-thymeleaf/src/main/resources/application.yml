@@ -1,0 +1,36 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ColorXJH
+    password: 2012WananXJH
+    url: jdbc:mysql://49.235.243.26:3306/test
+    druid:
+      #配置监控页
+      stat-view-servlet:
+        enabled: true
+        login-username: Color
+        login-password: 123456
+        reset-enable: false
+      #监控web
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      #开启拦截器
+      filters: stat,wall
+      #具体拦截器
+      filter:
+        stat:
+          slow-sql-millis: 1000
+          log-slow-sql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            #所有更新操作都被防火墙拦截，详情参考官方文档
+            update-allow: false
+      aop-patterns: com.example.springboot2thymeleaf.controller.*

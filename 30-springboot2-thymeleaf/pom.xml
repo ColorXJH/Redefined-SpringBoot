@@ -15,6 +15,8 @@
     <description>30-springboot2-thymeleaf</description>
     <properties>
         <java.version>1.8</java.version>
+        <!--除了springboot的版本仲裁，也可以使用重新定义就近依赖原则改变版本号（maven属性的就近优先原则）-->
+        <!--<mysql.version>8.0.27</mysql.version>-->
     </properties>
     <dependencies>
         <dependency>
@@ -25,7 +27,35 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!--数据库连接-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <!--使用第三方数据源，不使用HikariCPDataSource,druid有一整套数据监控方案-->
+        <!--<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.9</version>
+        </dependency>-->
+        <!--也可以使用这个starter，相应的配置文件部分需要修改一些-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.17</version>
+        </dependency>
+        <!--驱动自己导入，因为spring也不知道你要连接什么数据库-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!--springboot官方已经帮我们做过了mysql的版本仲裁-->
+            <!--<version>8.0.27</version>-->
+        </dependency>
+        <!--springboot对aop的支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>

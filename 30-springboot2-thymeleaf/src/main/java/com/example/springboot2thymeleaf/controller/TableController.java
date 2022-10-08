@@ -3,9 +3,12 @@ package com.example.springboot2thymeleaf.controller;
 import com.example.springboot2thymeleaf.bean.Person;
 import com.example.springboot2thymeleaf.bean.User;
 import com.example.springboot2thymeleaf.exception.UserToManyException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,9 @@ import java.util.List;
  */
 @Controller
 public class TableController {
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     @GetMapping("/basic_table")
     public String basicTable(Integer a){
         int x=10/a;
@@ -48,5 +54,11 @@ public class TableController {
     @GetMapping("/editable_table")
     public String editable_table(){
         return "table/editable_table";
+    }
+
+    @ResponseBody
+    @GetMapping("/queryTable")
+    public Object queryTable(){
+        return  jdbcTemplate.queryForList("SELECT * FROM test.employee");
     }
 }
