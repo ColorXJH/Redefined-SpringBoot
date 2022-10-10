@@ -1,8 +1,9 @@
 package com.example.springboot2thymeleaf.controller;
 
+import com.example.springboot2thymeleaf.bean.MPUser;
 import com.example.springboot2thymeleaf.bean.Person;
 import com.example.springboot2thymeleaf.bean.User;
-import com.example.springboot2thymeleaf.exception.UserToManyException;
+import com.example.springboot2thymeleaf.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class TableController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Resource
+    private UserMapper userMapper;
+
     @GetMapping("/basic_table")
     public String basicTable(Integer a){
         int x=10/a;
@@ -36,9 +41,9 @@ public class TableController {
         persons.add(new Person("2","张4",23,"123.12.com"));
         persons.add(new Person("3","张5",24,"123.13.com"));
         persons.add(new Person("4","张6",25,"123.14.com"));
-        if(persons.size()>3){
+        /*if(persons.size()>3){
             throw new UserToManyException();
-        }
+        }*/
         User users=new User();
         users.setRecords(persons);
         users.setPages(2);
@@ -61,4 +66,12 @@ public class TableController {
     public Object queryTable(){
         return  jdbcTemplate.queryForList("SELECT * FROM test.employee");
     }
+
+    @GetMapping("/test123")
+    public void test1(){
+        System.out.println(("----- selectAll method test ------"));
+        List<MPUser> userList = userMapper.selectList(null);
+        userList.forEach(System.out::println);
+    }
+
 }

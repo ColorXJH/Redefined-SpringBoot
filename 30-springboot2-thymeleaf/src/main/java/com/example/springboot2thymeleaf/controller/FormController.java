@@ -54,6 +54,16 @@ public class FormController {
         System.out.println(ps);
         return ps;
     }
-
+    @GetMapping("/findOne")
+    @ResponseBody
+    public employee findOne(){
+        return mapper.findOne();
+    }
+    @PostMapping("/insertOne")
+    @ResponseBody
+    public employee insertOne(employee employee){
+        mapper.insertOne(employee);
+        return employee;
+    }
 }
 
