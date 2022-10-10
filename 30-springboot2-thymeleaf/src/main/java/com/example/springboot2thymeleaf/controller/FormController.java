@@ -1,13 +1,18 @@
 package com.example.springboot2thymeleaf.controller;
 
 import com.example.springboot2thymeleaf.bean.Form;
+import com.example.springboot2thymeleaf.bean.employee;
+import com.example.springboot2thymeleaf.mapper.AccountMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author ColorXJH
@@ -17,6 +22,9 @@ import java.io.IOException;
  */
 @Controller
 public class FormController {
+    @Autowired
+    AccountMapper mapper;
+
     @GetMapping("/form_layouts")
     public String form_layouts(){
         return "form/form_layouts";
@@ -29,7 +37,6 @@ public class FormController {
         MultipartFile[] photos=form.getPhotos();
         MultipartFile image=form.getHeaderImg();
         String filepath="F:\\360\\test";
-
         if(!image.isEmpty()){
             image.transferTo(new File(filepath+"\\"+image.getOriginalFilename()));
         }
@@ -39,6 +46,13 @@ public class FormController {
             }
         }
         return "redirect:/main.html";
+    }
+    @GetMapping("/findAll")
+    @ResponseBody
+    public List<employee> findAll(){
+        List<employee>ps= mapper.findAll();
+        System.out.println(ps);
+        return ps;
     }
 
 }

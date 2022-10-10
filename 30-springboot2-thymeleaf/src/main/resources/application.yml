@@ -34,3 +34,7 @@ spring:
             #所有更新操作都被防火墙拦截，详情参考官方文档
             update-allow: false
       aop-patterns: com.example.springboot2thymeleaf.controller.*
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml

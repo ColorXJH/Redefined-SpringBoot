@@ -22,6 +22,13 @@ import java.util.Arrays;
 //@Configuration
 //@ImportResource(locations = {"classpath:beans.xml"})//加载外部资源
 public class MyDataSourceConfig {
+    /*
+     这里的druid使用的是alibaba的druid-spring-boot-starter，而不是传统的druid
+     传统的druid没有datasource实例，需要我们自己配置，不推荐。
+     因为 druid-spring-boot-starter 依赖提供了 DruidDataSourceBuilder 类，
+     这个可以用来构建一个 DataSource 实例
+     */
+
     @Bean
     //设置自定义数据源的地址用户名密码url等等，从配置文件中获取（因为参数是一样的）
     @ConfigurationProperties(prefix = "spring.datasource")
