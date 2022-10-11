@@ -1,18 +1,20 @@
 package com.example.springboot2thymeleaf.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot2thymeleaf.bean.MPUser;
-import com.example.springboot2thymeleaf.bean.Person;
-import com.example.springboot2thymeleaf.bean.User;
 import com.example.springboot2thymeleaf.mapper.UserMapper;
+import com.example.springboot2thymeleaf.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +25,11 @@ import java.util.List;
  */
 @Controller
 public class TableController {
-    @Autowired
+    @Autowired//报红不影响
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    TableService tableService;
 
     @Resource
     private UserMapper userMapper;
@@ -35,21 +40,13 @@ public class TableController {
         return "table/basic_table";
     }
     @GetMapping("/dynamic_table")
-    public String dynamic_table(Model model){
-        List<Person> persons=new ArrayList<>();
-        persons.add(new Person("1","张三",22,"123.11.com"));
-        persons.add(new Person("2","张4",23,"123.12.com"));
-        persons.add(new Person("3","张5",24,"123.13.com"));
-        persons.add(new Person("4","张6",25,"123.14.com"));
-        /*if(persons.size()>3){
-            throw new UserToManyException();
-        }*/
-        User users=new User();
-        users.setRecords(persons);
-        users.setPages(2);
-        users.setTotal(20);
-        users.setCurrent(3);
-        model.addAttribute("users",users);
+    public String dynamic_table(@RequestParam(value = "pn",defaultValue = "1")Integer pn, Model model){
+        List<MPUser>list=tableService.list();
+        //分页查询数据
+        Page<MPUser>userPage=new Page<>(pn,3);
+        //分页查询结果
+        Page<MPUser> page = tableService.page(userPage, null);
+        model.addAttribute("users",page);
         return "table/dynamic_table";
     }
     @GetMapping("/responsive_table")
@@ -72,6 +69,15 @@ public class TableController {
         System.out.println(("----- selectAll method test ------"));
         List<MPUser> userList = userMapper.selectList(null);
         userList.forEach(System.out::println);
+    }
+    @GetMapping("/user/delete/{id}")
+    public String userDelete(@PathVariable("id")Integer id, @RequestParam("pn")Integer pn, RedirectAttributes ra){
+        tableService.removeById(id);
+        //方法1：
+        //return "redirect:/dynamic_table?pn="+pn;
+        //方法2：,添加RedirectAttributes
+        ra.addAttribute("pn",pn);//参数以url的方式添加进去
+        return "redirect:/dynamic_table";
     }
 
 }

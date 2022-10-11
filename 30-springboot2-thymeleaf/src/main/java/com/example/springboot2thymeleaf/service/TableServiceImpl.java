@@ -3,6 +3,7 @@ package com.example.springboot2thymeleaf.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springboot2thymeleaf.bean.MPUser;
 import com.example.springboot2thymeleaf.mapper.UserMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * 这样我们基本上不用写业务逻辑，只需要自定义一部分独特的业务逻辑
  * @date 2022/10/10 16:37
  */
+@Service
 public class TableServiceImpl  extends ServiceImpl<UserMapper,MPUser> implements  TableService{
     //ctrl+o 调出查看方法 ==》ctrl+f3查看父类方法
     @Override
