@@ -14,6 +14,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
+    /*Filter与Interceptor几乎拥有相同的功能，到底用哪个好？
+    *   filter 是servlet定义的原生组件，好处是脱离spring也能应用
+    *   interceptor是spring定义的接口，只能在spring框架中使用，当然也就可以使用spring的autowired自定装配功能了
+    */
+
+    @Autowired
+    RedisUrlCountInterceptor redisUrlCountInterceptor;
+
     @Autowired
     URLInterceptor urlInterceptor;
     //访问/static/** 下的所有请求，都去classpath:/static/下面进行匹配相应的资源
@@ -36,6 +44,9 @@ public class MyWebConfig implements WebMvcConfigurer {
 
                 //这两种情况究其原因：static是执行完controller之后在view视图接口的render里面拼接的，
                 //拦截器执行时机在controller之前，所以不行
+        registry.addInterceptor(redisUrlCountInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/","/login","/static/**");
     }
 }
 

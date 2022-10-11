@@ -79,6 +79,22 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <!--springboot集成加密解密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+        <!--新版底层默认使用lettuce-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--当然也可以自定义使用jedis,移除吊lettuce或者导入jedis并且指定类型-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

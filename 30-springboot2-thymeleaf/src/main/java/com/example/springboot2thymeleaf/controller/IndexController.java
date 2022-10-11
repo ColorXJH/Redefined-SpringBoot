@@ -1,11 +1,15 @@
 package com.example.springboot2thymeleaf.controller;
 
 import com.example.springboot2thymeleaf.bean.User;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -16,6 +20,9 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class IndexController {
+    @Resource
+    StringRedisTemplate stringRedisTemplate;
+
     @GetMapping(value = {"/","/login"})
     public String loginPage(){
         return "login";
@@ -34,13 +41,26 @@ public class IndexController {
     }
     //template下默认是无法访问的，需要经过controller处理，默认只能访问/static 文件夹以及springboot自定义的那些文件夹
     @GetMapping("/main.html")
-    public String mainPage(){
+    public String mainPage(Model model){
         //是否登录成功，拦截器，过滤器，这里偷懒用HttpSession
+
+        //登录进来之后统计url访问次数防止到首页
+        ValueOperations<String, String> options = stringRedisTemplate.opsForValue();
+        String main=options.get("/main.html");
+        String sql=options.get("/sql");
+        model.addAttribute("main",main);
+        model.addAttribute("sql",sql);
         return "main";
     }
     @GetMapping("/log_out")
     public String logout(HttpSession session){
         session.removeAttribute("loginUser");
         return "login";
+    }
+
+    @GetMapping("/sql")
+    @ResponseBody
+    public String sql(){
+        return "xixi";
     }
 }

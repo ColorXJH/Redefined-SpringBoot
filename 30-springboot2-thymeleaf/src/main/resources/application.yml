@@ -34,6 +34,14 @@ spring:
             #所有更新操作都被防火墙拦截，详情参考官方文档
             update-allow: false
       aop-patterns: com.example.springboot2thymeleaf.controller.*
+  redis:
+    host: 49.235.243.26
+    port: 6379
+    database: 0
+    password: ENC(2qkiPpM4zV7lyslpXXIJpeb/qt13P8b8ho0jRIfg52JvnpNt5K1HKNEAjowUXSy7)
+    #新版默认使用的是lettuce,这里指定使用老版本的jedis
+    client-type: jedis
+    #下面也可以接着配置jedis/lettuce连接池的一些信息
 #  sql:
 #    init:
 #      data-locations: classpath:data-mysql.sql
@@ -43,3 +51,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-location: classpath:mybatis/mybatis-config.xml
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    password: jaspyt_password
+
+
