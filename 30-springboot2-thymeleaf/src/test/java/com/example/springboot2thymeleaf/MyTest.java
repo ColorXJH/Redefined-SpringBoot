@@ -3,6 +3,7 @@ package com.example.springboot2thymeleaf;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -91,4 +92,61 @@ public class MyTest {//在类上运行单元测试，则所有的测试方法都
      int cal(int i,int j){
         return i+j;
      }
+
+     @Test
+     @DisplayName("数组断言")
+     void testArray(){
+        Assertions.assertArrayEquals(new int[]{2,1},new int[]{1,2},"数组内容不相等");
+
+     }
+
+     @Test
+     @DisplayName("组合断言")
+     void combineAll(){
+         //里面的两个断言都成功，外面的才算成功
+         Assertions.assertAll("test",()->{
+             Assertions.assertTrue(true&&true,"结果不为true");
+         },()->{
+             Assertions.assertEquals(1,2,"结果不是预期的");
+         });
+     }
+
+     @Test
+     @DisplayName("异常断言")//断言这里会抛出异常，如果没有抛出异常，说明业务逻辑不对
+     void exceptionAssert(){
+         Assertions.assertThrows(ArithmeticException.class,()->{
+             int i=10/0;
+         },"业务逻辑居然正常运行了？，这是不对的");
+     }
+
+    @Test
+    @DisplayName("超时断言")
+    void timeOutAssert(){
+        Assertions.assertTimeout(Duration.ofMillis(1000),()->{
+           Thread.sleep(2000);
+        },"超时了");
+    }
+
+    @Test
+    @DisplayName("快速失败")
+    void testFailFast(){
+        if(2==2){
+            Assertions.fail("测试失败");
+        }
+
+    }
+    //项目一个模块开发完成后，需要书写单元测试类测试功能，然后对于整个类运行单元测试或者在maven中运行test，就会在控制台
+    //生成测试报告，方便查看是否能测试报告
+
+
+    //前置条件：断言会导致失败，前置条件则如果不通过则会终止执行而不是判定失败
+
+    @Test
+    @DisplayName("测试前置条件")
+    void testAssumptions(){
+        //在这里判断一下是否为true，如果前置条件为true,则继续往下走，否则终止执行
+        //测试结果类似于京用掉了@Disabled
+        Assumptions.assumeTrue(false,"结果不是true");
+        System.out.println("11111");
+    }
 }
