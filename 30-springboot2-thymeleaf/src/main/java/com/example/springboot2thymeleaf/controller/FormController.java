@@ -1,6 +1,7 @@
 package com.example.springboot2thymeleaf.controller;
 
 import com.example.springboot2thymeleaf.bean.Form;
+import com.example.springboot2thymeleaf.bean.MyPerson;
 import com.example.springboot2thymeleaf.bean.employee;
 import com.example.springboot2thymeleaf.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,5 +68,20 @@ public class FormController {
         mapper.insertOne(employee);
         return employee;
     }
+    @Autowired
+    RestTemplate restTemplate;
+
+    @GetMapping("/postPerson")
+    @ResponseBody
+    public String postPerson(){
+        MyPerson person=new MyPerson();
+        person.setAge(12);
+        person.setBirth(new Date());
+        person.setUserName("666");
+        String body = restTemplate.postForObject("http://localhost:8099/postPerson", person, String.class);
+        return body;
+
+    }
+
 }
 

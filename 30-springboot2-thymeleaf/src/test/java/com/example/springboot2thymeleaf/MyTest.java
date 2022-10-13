@@ -1,10 +1,14 @@
 package com.example.springboot2thymeleaf;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * @author ColorXJH
@@ -148,5 +152,31 @@ public class MyTest {//在类上运行单元测试，则所有的测试方法都
         //测试结果类似于京用掉了@Disabled
         Assumptions.assumeTrue(false,"结果不是true");
         System.out.println("11111");
+    }
+
+
+    //参数化测试:根据入参的不同来多多次执行测试，省去书写的荣冗余代码
+        //@ValueSource:为参数化测试指定入参来源，支持八大基础类型以及Class类型
+        //@NullSource:表示为参数化测试提供一个null的入参
+        //@EnumSource,@CsvFileSource
+        //@MethodSource:表示读取指定方法的返回值作为参数化测试入参（注意方法返回需要是一个流）
+
+    //参数化测试的注解
+    @DisplayName("参数化测试")
+    @ParameterizedTest
+    @ValueSource(ints = {1,2,3,4,5})
+    void  parameterTest(int i){
+        System.out.println(i);//同时测试5个值
+    }
+    @DisplayName("参数化测试")
+    @ParameterizedTest
+    @MethodSource("stringProvicer")
+    void  parameterTest2(String  i){
+        System.out.println(i);//同时测试5个值
+    }
+
+
+    static Stream<String> stringProvicer(){
+        return Stream.of("apple","banana");
     }
 }

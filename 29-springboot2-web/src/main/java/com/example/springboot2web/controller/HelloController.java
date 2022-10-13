@@ -1,5 +1,6 @@
 package com.example.springboot2web.controller;
 
+import com.example.springboot2web.bean.MyPerson;
 import com.example.springboot2web.bean.Person;
 import com.example.springboot2web.bean.Pet;
 import org.springframework.web.bind.annotation.*;
@@ -103,5 +104,18 @@ public class HelloController {
         person.setPet(new Pet());
         return person;
     }
+
+    @PostMapping("/postPerson")
+    public String getRemotePerson(@RequestBody MyPerson person){
+        System.out.println(person);
+        return "success123";
+    }
+
+    @GetMapping("/postPerson")
+    public String getRemotePerson1(Person person){
+        System.out.println(person);
+        return "success123";
+    }
+
 
 }

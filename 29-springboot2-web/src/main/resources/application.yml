@@ -18,5 +18,6 @@ spring:
     contentnegotiation:
       favor-parameter: true
 server:
-  servlet:
-    context-path: /color
+#  servlet:
+#    context-path: /color
+  port: 8099

@@ -1,10 +1,15 @@
 package com.example.springboot2thymeleaf.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.charset.Charset;
 
 /**
  * @author ColorXJH
@@ -14,6 +19,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
+
+    @Bean
+    RestTemplate restTemplate(){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("utf-8")));
+        return restTemplate;
+    }
+
     /*Filter与Interceptor几乎拥有相同的功能，到底用哪个好？
     *   filter 是servlet定义的原生组件，好处是脱离spring也能应用
     *   interceptor是spring定义的接口，只能在spring框架中使用，当然也就可以使用spring的autowired自定装配功能了
