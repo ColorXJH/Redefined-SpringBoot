@@ -56,4 +56,35 @@ jasypt:
     algorithm: PBEWITHHMACSHA512ANDAES_256
     password: jaspyt_password
 
+##以web的方式暴露,默认jmx方式暴露，可以通过cmd jconsole连接本程序查看mbean
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    ##默认暴露所有，这里是默认的总开关
+    #enabled-by-default: true
+    enabled-by-default: false
+  ##显示端点的详细信息
+  endpoint:
+    #也可以在这边单独开启各个端点的分开关
+    health:
+      show-details: always
+      enabled: true
+    metrics:
+      enabled: true
+    info:
+      enabled: true
+  ##启用配置里的info开头的变量
+  info:
+    env:
+      enabled: true
+
+#自定义info信息
+info:
+  appName: springboot-thymeleaf-actuator
+  version: 0.0.1
+  #也可以获取pom文件的内容（maven）
+  mavenProjectName: @project.artifactId@
+  mavenProjectVersion: @project.version@
 

@@ -4,7 +4,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot2thymeleaf.bean.MPUser;
 import com.example.springboot2thymeleaf.mapper.UserMapper;
 import com.example.springboot2thymeleaf.service.TableService;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.binder.MeterBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @author ColorXJH
@@ -47,6 +53,8 @@ public class TableController {
         //分页查询结果
         Page<MPUser> page = tableService.page(userPage, null);
         model.addAttribute("users",page);
+        //每次查询一次，增加以下计数，这个是metrics的监控
+        counter.increment();
         return "table/dynamic_table";
     }
     @GetMapping("/responsive_table")
@@ -80,4 +88,16 @@ public class TableController {
         return "redirect:/dynamic_table";
     }
 
+
+    Counter counter;
+    //构造器的方式注入metrics
+    @Autowired(required = false)//不加这个注解也行，其实这个属于idea的检测级别问题
+    public TableController(MeterRegistry registry){
+        counter = registry.counter("TableController.count");
+    }
+    //除了在构造器中传入MeterRegistry，也可以使用下面的写法(在有@Configuration注解类中书写)
+    @Bean
+    MeterBinder queueSize(Queue queue){
+        return (registry)-> Gauge.builder("queueSize",queue::size).register(registry);
+    }
 }
