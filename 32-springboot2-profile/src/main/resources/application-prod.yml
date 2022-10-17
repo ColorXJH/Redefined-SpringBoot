@@ -1,0 +1,9 @@
+name: prod-Color
+person:
+  addr: 安徽
+  age: 28
+  name: Color
+persons:
+  addr: 安徽1
+  age: 281
+  name: Color1
