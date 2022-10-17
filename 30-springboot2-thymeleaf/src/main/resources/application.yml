@@ -42,6 +42,16 @@ spring:
     #新版默认使用的是lettuce,这里指定使用老版本的jedis
     client-type: jedis
     #下面也可以接着配置jedis/lettuce连接池的一些信息
+
+  #这里向adminServer祖册自己的服务，如果引用了安全框架，则还需要引入security，并且配置对security所有请求的放行
+  boot:
+    admin:
+      client:
+        #服务器地址
+        url: http://localhost:8888
+        #也可以配置ip，防止找不到
+        instance:
+          prefer-ip: true
 #  sql:
 #    init:
 #      data-locations: classpath:data-mysql.sql
@@ -63,8 +73,8 @@ management:
       exposure:
         include: '*'
     ##默认暴露所有，这里是默认的总开关
-    #enabled-by-default: true
-    enabled-by-default: false
+    enabled-by-default: true
+    #enabled-by-default: false
   ##显示端点的详细信息
   endpoint:
     #也可以在这边单独开启各个端点的分开关
@@ -87,4 +97,7 @@ info:
   #也可以获取pom文件的内容（maven）
   mavenProjectName: @project.artifactId@
   mavenProjectVersion: @project.version@
+
+
+
 
