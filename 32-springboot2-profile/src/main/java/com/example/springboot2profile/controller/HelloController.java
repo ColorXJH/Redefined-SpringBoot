@@ -26,10 +26,13 @@ public class HelloController {
     private Person person;
     @Autowired
     private PersonInf pss;
-
+    //也可以获取到环境变量的值，同时也可以获取到命令行参数的值
+    @Value("${MAVEN_HOME}")
+    private String msg;
     @GetMapping("/type")
     public String getType(){
         System.out.println(pss);
+        System.out.println(msg);
         return pss.getClass().toString();
     }
 }
