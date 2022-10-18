@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/10/17 16:28
  */
 @Configuration
-@ConditionalOnMissingBean(HelloService.class)
 @EnableConfigurationProperties(HelloProperties.class)//绑定属性，默认HelloProperties组件放到容器中
 public class HelloServiceAutoConfigure {
+    @ConditionalOnMissingBean(HelloService.class)
     @Bean
     public HelloService helloService(){
         return new HelloService();
