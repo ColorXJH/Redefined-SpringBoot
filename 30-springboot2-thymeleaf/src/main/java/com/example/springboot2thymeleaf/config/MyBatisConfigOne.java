@@ -37,6 +37,8 @@ public class MyBatisConfigOne {
     但是如果只根据type无法辨别注入对象时,就需要配合使用@Qualifier注解或者@Primary注解使用.
     */
     @Resource(name="dsOne")
+            //@Autowired
+            //@Qualifier("dsOne")
     DataSource ds1;
 
     @Bean
